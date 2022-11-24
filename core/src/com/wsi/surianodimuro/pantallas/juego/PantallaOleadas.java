@@ -1,11 +1,17 @@
 package com.wsi.surianodimuro.pantallas.juego;
 
 import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.wsi.surianodimuro.enumeradores.Ascensores;
 import com.wsi.surianodimuro.interfaces.AumentarDificultadListener;
 import com.wsi.surianodimuro.interfaces.MejorarEstadisticasListener;
+import com.wsi.surianodimuro.interfaces.MovimientoAgenteListener;
 import com.wsi.surianodimuro.interfaces.ProcesamientoEntradas;
+import com.wsi.surianodimuro.objetos.Ascensor;
 import com.wsi.surianodimuro.pantallas.Pantalla;
 import com.wsi.surianodimuro.pantallas.juego.entradas.EntradasComportamientoAgente;
 import com.wsi.surianodimuro.pantallas.juego.entradas.EntradasMenuJuegoTerminado;
@@ -19,7 +25,7 @@ import com.wsi.surianodimuro.utilidades.ConfigGraficos;
 import com.wsi.surianodimuro.utilidades.Globales;
 import com.wsi.surianodimuro.utilidades.Utiles;
 
-public abstract class PantallaOleadas extends Pantalla implements MejorarEstadisticasListener, AumentarDificultadListener {
+public abstract class PantallaOleadas extends Pantalla implements MejorarEstadisticasListener, AumentarDificultadListener, MovimientoAgenteListener {
 	
 	protected OleadaInfo oleadaInfo;
 	protected DatosPartida datosPartida;
@@ -259,5 +265,93 @@ public abstract class PantallaOleadas extends Pantalla implements MejorarEstadis
 
 	@Override
 	public void aumentarVelDisparo() {
+	}
+	
+	@Override
+	public boolean chequearColisiones() {
+
+		int i = 0;
+		boolean colisiona = false;
+
+		do {
+			RectangleMapObject obj = mapa.getColisiones()[i];
+			if (Globales.jugadores.get(Globales.cliente.numCliente - 1).getRectangulo().overlaps(obj.getRectangle())) {
+				colisiona = true;
+			}
+		} while ((!colisiona) && (++i < mapa.getColisiones().length));
+
+		return colisiona;
+	}
+
+	@Override
+	public Ascensor chequearUbicacionEnAscensor() {
+
+		int i = 0;
+		boolean colisiona = false;
+
+		do {
+
+			Ascensor ascensor = mapa.getAscensores()[i];
+			Rectangle rectJug = Globales.jugadores.get(Globales.cliente.numCliente - 1).getRectangulo();
+
+			// Xo del jugador entre Xo y Xf del ascensor (colisiona) ???
+			if (((rectJug.getX() > ascensor.getRectangulo().getX())
+					&& (rectJug.getX() < ascensor.getRectangulo().getX() + ascensor.getRectangulo().getWidth())
+					&& (rectJug.getY() >= ascensor.getRectangulo().getY())
+					&& (rectJug.getY() < ascensor.getRectangulo().getY() + ascensor.getRectangulo().getHeight()))
+					// Jugador sobrepasa la mitad del ascensor ???
+					&& (rectJug.getX() <= ascensor.getRectangulo().getX()
+							+ ascensor.getRectangulo().getWidth() * 0.5f)) {
+				colisiona = true;
+			}
+
+			// Xf del jugador entre Xo y Xf del ascensor (colisiona) ???
+			else if (((rectJug.getX() + rectJug.getWidth() > ascensor.getRectangulo().getX())
+					&& (rectJug.getX() + rectJug.getWidth() < ascensor.getRectangulo().getX()
+							+ ascensor.getRectangulo().getWidth())
+					&& (rectJug.getY() > ascensor.getRectangulo().getY())
+					&& (rectJug.getY() < ascensor.getRectangulo().getY() + ascensor.getRectangulo().getHeight()))
+					// Jugador sobrepasa la mitad del ascensor ???
+					&& (rectJug.getX() + rectJug.getWidth() >= ascensor.getRectangulo().getX()
+							+ ascensor.getRectangulo().getWidth() * 0.5f)) {
+				colisiona = true;
+			}
+
+		} while ((!colisiona) && (++i < mapa.getAscensores().length));
+
+		return (colisiona) ? mapa.getAscensores()[i] : null;
+	}
+
+	@Override
+	public void procesarMovimientoVertical(Ascensor ascensorOrigen) {
+
+		Ascensores tipoDestino = null;
+		Ascensor ascensorDestino = null;
+
+		if ((Globales.jugadores.get(Globales.cliente.numCliente - 1).controlador.arriba) && (ascensorOrigen.getArriba() != null)) {
+			tipoDestino = ascensorOrigen.getArriba();
+		} else if ((Globales.jugadores.get(Globales.cliente.numCliente - 1).controlador.abajo) && (ascensorOrigen.getAbajo() != null)) {
+			tipoDestino = ascensorOrigen.getAbajo();
+		}
+
+		if (tipoDestino != null) {
+
+			int i = 0;
+			boolean encontrado = false;
+			do {
+				Ascensor asc = mapa.getAscensores()[i];
+				if (tipoDestino.getNombre().equals(asc.getTipo().getNombre())) {
+					encontrado = true;
+					ascensorDestino = asc;
+				}
+			} while ((!encontrado) && (++i < mapa.getAscensores().length));
+
+			float nuevaPosX = ascensorDestino.getPosicion().x + ascensorDestino.getDimensiones()[0] / 2
+					- Globales.jugadores.get(Globales.cliente.numCliente - 1).getDimensiones()[0] / 2;
+			float nuevaPosY = ascensorDestino.getPosicion().y;
+
+			Globales.jugadores.get(Globales.cliente.numCliente - 1).usarAscensor(nuevaPosX, nuevaPosY);
+			sonidos.sonarAscensor();
+		}
 	}
 }

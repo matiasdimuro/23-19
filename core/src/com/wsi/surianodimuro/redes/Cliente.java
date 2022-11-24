@@ -214,8 +214,6 @@ public class Cliente extends Thread implements Disposable {
 				final int numAgente = Integer.parseInt(mensajeParametrizado[1]);
 				Globales.redListener.resetearEstadosAgente(numAgente);
 			}
-			
-			
 
 			/* CONTROLAR DE ACA PARA ABAJO */
 			
@@ -235,22 +233,16 @@ public class Cliente extends Thread implements Disposable {
 			}
 
 			// TODO ProcesarMovimiento
-//			else if (mensajeParametrizado[0].equals(MensajesServidor.MOVER_INFECTADO_IZQUIERDA.getMensaje())) {
-//				int indiceInfectado = Integer.parseInt(mensajeParametrizado[1]);
-//				if (Globales.infectados.size() > 0) {
-//					System.out.println("===> Hay que mover a la izquierda un infectado");
-//					Globales.redListener.moverInfectadoIzquierda(indiceInfectado);
-//				}
+			else if (mensajeParametrizado[0].equals(MensajesServidor.MOVER_INFECTADO_IZQUIERDA.getMensaje())) {
+				int indiceInfectado = Integer.parseInt(mensajeParametrizado[1]);
+				Globales.redListener.moverInfectadoIzquierda(indiceInfectado);
 			}
 
 			// TODO ProcesarMovimiento
-//			else if (mensajeParametrizado[0].equals(MensajesServidor.MOVER_INFECTADO_DERECHA.getMensaje())) {
-//				int indiceInfectado = Integer.parseInt(mensajeParametrizado[1]);
-//				if (Globales.infectados.size() > 0) {
-//					System.out.println("===> Hay que mover a la derecha un infectado");
-//					Globales.redListener.moverInfectadoDerecha(indiceInfectado);
-//				}
-//			}
+			else if (mensajeParametrizado[0].equals(MensajesServidor.MOVER_INFECTADO_DERECHA.getMensaje())) {
+				int indiceInfectado = Integer.parseInt(mensajeParametrizado[1]);
+				Globales.redListener.moverInfectadoDerecha(indiceInfectado);
+			}
 
 //			else if (mensajeParametrizado[0].equals(MensajesServidor.ESCAPE_MONSTRUO.getMensaje())
 //					|| (mensajeParametrizado[0].equals(MensajesServidor.ESCAPE_NINIOS.getMensaje()))) {
@@ -309,7 +301,7 @@ public class Cliente extends Thread implements Disposable {
 //				Globales.redListener.actualizarNumOleada(numOleada);
 //			}
 
-//		}
+		}
 	}
 
 	public void reiniciarCliente() {

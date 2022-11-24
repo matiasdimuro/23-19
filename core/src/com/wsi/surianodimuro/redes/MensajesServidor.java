@@ -20,9 +20,9 @@ public enum MensajesServidor {
 	RESETEAR_ESTADOS_AGENTE("Resetear estados agente"),
 	
 	SPAWNEAR_INFECTADO("Spawnear infectado"),
-	/*
 	MOVER_INFECTADO_IZQUIERDA("Mover infectado izquierda"),
 	MOVER_INFECTADO_DERECHA("Mover infectado derecha"),
+	/*
 
 	ESCAPE_MONSTRUO("Escape monstruo"),
 	ESCAPE_NINIOS("Escape ninio"),

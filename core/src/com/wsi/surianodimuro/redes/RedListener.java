@@ -18,8 +18,8 @@ public interface RedListener {
 	void resetearEstadosAgente(int numCliente);
 
 	void procesarSpawnInfectado(String tipoInfectado, int numInfectado, float x, float y);
-//	void moverInfectadoIzquierda(int indiceInfectado);
-//	void moverInfectadoDerecha(int indiceInfectado);
+	void moverInfectadoIzquierda(int indice);
+	void moverInfectadoDerecha(int indice);
 	
 //	void actualizarEscape(String mensaje);
 	

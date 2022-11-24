@@ -1,19 +1,6 @@
 package com.wsi.surianodimuro.interfaces;
 
-import com.wsi.surianodimuro.objetos.Ascensor;
-
-public interface ProcesosJugabilidad extends ActividadInfectadosListener, ActividadProyectilesListener, MovimientoAgenteListener {
-	
-	/* MovimientoAgenteListener */
-	
-	@Override
-	boolean chequearColisiones();
-
-	@Override
-	Ascensor chequearUbicacionEnAscensor();
-
-	@Override
-	void procesarMovimientoVertical(Ascensor ascensorOrigen);
+public interface ProcesosJugabilidad extends ActividadInfectadosListener, ActividadProyectilesListener {
 
 	/* ActividadProyectilesListener */
 	

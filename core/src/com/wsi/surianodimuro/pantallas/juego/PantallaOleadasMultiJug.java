@@ -95,7 +95,6 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 				jugadorDos.renderizar();
 
 				Utiles.batch.end();
-
 				mostrarIndicadores();
 
 				if (datosPartida.suspendida) {
@@ -229,8 +228,6 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 	public void procesarSpawnInfectado(String tipoInfectado, int numInfectado, float x, float y) {
 
 		Infectado nuevoInfectado = null;
-		
-		System.out.println("-> Spawn detectado (" + infectados.size() + " infectados)");
 
 		if (tipoInfectado.equals(Infectados.MONSTRUO.toString())) {
 			nuevoInfectado = Monstruos.retornarMonstruo(numInfectado);
@@ -242,24 +239,35 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 
 		nuevoInfectado.setPosicion(x, y);
 		infectados.add(nuevoInfectado);
+		
+		System.out.println("-> Spawn detectado (" + infectados.size() + " infectados)");
 	}
 
-//	@Override
-//	public void moverInfectadoIzquierda(int indiceInfectado) {
-		// TODO ProcesarMovimiento
-//		infectados.get(indiceInfectado).moverseIzquierda();
-//		infectados.get(indiceInfectado).caminarIzquierda();
-//		System.out.println("---> Moviendo a " + infectados.get(indiceInfectado));
-//	}
+	@Override
+	public void moverInfectadoIzquierda(int indice) {
+		
+		if (indice <= infectados.size()) {
+			infectados.get(indice).controlador.mirandoIzquierda = true;
+			infectados.get(indice).controlador.mirandoDerecha = false;
+			infectados.get(indice).moverseIzquierda();
+			infectados.get(indice).caminarIzquierda();
+		}
+	}
 
-//	@Override
-//	public void moverInfectadoDerecha(int indiceInfectado) {
-		// TODO ProcesarMovimiento
-//		infectados.get(indiceInfectado).moverseDerecha();
-//		infectados.get(indiceInfectado).moverseDerecha();
-//		
-//		System.out.println("---> Moviendo a " + infectados.get(indiceInfectado));
-//	}
+	@Override
+	public void moverInfectadoDerecha(int indice) {
+		
+		System.out.println("Indice: " + indice);
+		System.out.println("Infectados totales: " + infectados.size());
+		System.out.println("Infectado:" + infectados.get(indice));
+		
+		if (indice <= infectados.size()) {
+			infectados.get(indice).controlador.mirandoDerecha = true;
+			infectados.get(indice).controlador.mirandoIzquierda = false;
+			infectados.get(indice).moverseDerecha();
+			infectados.get(indice).caminarDerecha();
+		}
+	}
 
 //	@Override
 //	public void actualizarEscape(String mensaje) {
