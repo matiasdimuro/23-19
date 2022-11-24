@@ -7,15 +7,12 @@ import com.wsi.surianodimuro.enumeradores.Monstruos;
 import com.wsi.surianodimuro.enumeradores.Ninios;
 import com.wsi.surianodimuro.pantallas.juego.hud.HudMultiJug;
 import com.wsi.surianodimuro.pantallas.menu.PantallaJugadorDesconectado;
-import com.wsi.surianodimuro.pantallas.menu.PantallaServidorDesconectado;
 import com.wsi.surianodimuro.personajes.Infectado;
 import com.wsi.surianodimuro.personajes.agentes.Agente;
 import com.wsi.surianodimuro.personajes.agentes.AgenteDos;
 import com.wsi.surianodimuro.personajes.agentes.AgenteUno;
 import com.wsi.surianodimuro.redes.InfoRed;
-import com.wsi.surianodimuro.redes.MensajesServidor;
 import com.wsi.surianodimuro.redes.RedListener;
-import com.wsi.surianodimuro.redes.Servidor;
 import com.wsi.surianodimuro.utilidades.ConfigGraficos;
 import com.wsi.surianodimuro.utilidades.Globales;
 import com.wsi.surianodimuro.utilidades.Utiles;
@@ -232,6 +229,8 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 	public void procesarSpawnInfectado(String tipoInfectado, int numInfectado, float x, float y) {
 
 		Infectado nuevoInfectado = null;
+		
+		System.out.println("-> Spawn detectado (" + infectados.size() + " infectados)");
 
 		if (tipoInfectado.equals(Infectados.MONSTRUO.toString())) {
 			nuevoInfectado = Monstruos.retornarMonstruo(numInfectado);
@@ -243,40 +242,37 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 
 		nuevoInfectado.setPosicion(x, y);
 		infectados.add(nuevoInfectado);
-
-		System.out.println("---> Ha spawneado " + nuevoInfectado);
-		System.out.println("---> Ahora hay " + infectados.size() + " infectados");
 	}
 
-	@Override
-	public void moverInfectadoIzquierda(int indiceInfectado) {
+//	@Override
+//	public void moverInfectadoIzquierda(int indiceInfectado) {
 		// TODO ProcesarMovimiento
 //		infectados.get(indiceInfectado).moverseIzquierda();
 //		infectados.get(indiceInfectado).caminarIzquierda();
 //		System.out.println("---> Moviendo a " + infectados.get(indiceInfectado));
-	}
+//	}
 
-	@Override
-	public void moverInfectadoDerecha(int indiceInfectado) {
+//	@Override
+//	public void moverInfectadoDerecha(int indiceInfectado) {
 		// TODO ProcesarMovimiento
 //		infectados.get(indiceInfectado).moverseDerecha();
 //		infectados.get(indiceInfectado).moverseDerecha();
 //		
 //		System.out.println("---> Moviendo a " + infectados.get(indiceInfectado));
-	}
+//	}
 
-	@Override
-	public void actualizarEscape(String mensaje) {
-		if (mensaje.equals(MensajesServidor.ESCAPE_MONSTRUO.getMensaje())) {
-			datosPartida.escapesRestantesMonstruos -= 1;
-			hud.getIndicadorEscMonstruos().actualizar();
-//			Globales.cajaMensajes.setTexto(Mensajes.ESCAPE_MONSTRUO.getMensaje());
-		} else {
-			datosPartida.escapesRestantesNinios -= 1;
-			hud.getIndicadorEscNinios().actualizar();
-//			Globales.cajaMensajes.setTexto(Mensajes.ESCAPE_NINIO.getMensaje());
-		}
-	}
+//	@Override
+//	public void actualizarEscape(String mensaje) {
+//		if (mensaje.equals(MensajesServidor.ESCAPE_MONSTRUO.getMensaje())) {
+//			datosPartida.escapesRestantesMonstruos -= 1;
+//			hud.getIndicadorEscMonstruos().actualizar();
+////			Globales.cajaMensajes.setTexto(Mensajes.ESCAPE_MONSTRUO.getMensaje());
+//		} else {
+//			datosPartida.escapesRestantesNinios -= 1;
+//			hud.getIndicadorEscNinios().actualizar();
+////			Globales.cajaMensajes.setTexto(Mensajes.ESCAPE_NINIO.getMensaje());
+//		}
+//	}
 
 	@Override
 	public void actualizarDisparo() {
@@ -304,13 +300,13 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 	public void aumentarVidaAgente() {
 		jugadorUno.sumarVida();
 		jugadorDos.sumarVida();
-		actualizarVidaAgente();
+//		actualizarVidaAgente();
 	}
 
-	@Override
-	public void actualizarVidaAgente() {
-		
-	}
+//	@Override
+//	public void actualizarVidaAgente() {
+//		
+//	}
 
 
 	@Override
@@ -337,7 +333,4 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 	public void actualizarSustoPuntos(String sustoPuntos) {
 		hud.getIndicadorGrito().newActualizarDatos(sustoPuntos);	
 	}
-	
-	
-
 }

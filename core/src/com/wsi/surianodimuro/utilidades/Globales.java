@@ -24,14 +24,14 @@ public abstract class Globales {
 
 	public static Game juego;
 	
-	public static Cliente cliente;
-	
+	/* Modo de un jugador */
 	public static MejorarEstadisticasListener mejorarEstadisticasListener;
 	public static AumentarDificultadListener aumentarDificultadListener;
 	public static ActividadInfectadosListener actividadInfectadosListener;
 	public static ActividadProyectilesListener actividadProyectilesListener;
 	public static MovimientoAgenteListener movimientoAgenteListener;
 	
+	public static Cliente cliente;
 	public static RedListener redListener;
 	
 	public static ArrayList<Agente> jugadores;

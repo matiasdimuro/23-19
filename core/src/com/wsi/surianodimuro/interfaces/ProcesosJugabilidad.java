@@ -1,26 +1,8 @@
 package com.wsi.surianodimuro.interfaces;
 
 import com.wsi.surianodimuro.objetos.Ascensor;
-import com.wsi.surianodimuro.personajes.Infectado;
 
-public interface ProcesosJugabilidad extends MejorarEstadisticasListener, AumentarDificultadListener, ActividadInfectadosListener, ActividadProyectilesListener, MovimientoAgenteListener {
-
-	/* MejorarEstadisticasListener */
-	
-	@Override
-	void aumentarVida();
-	
-	@Override
-	void aumentarRapidez();
-	
-	@Override
-	void aumentarAlcance();
-	
-	@Override
-	void aumentarVelDisparo();
-	
-	@Override
-	void chequearAumentoEstadisticas();
+public interface ProcesosJugabilidad extends ActividadInfectadosListener, ActividadProyectilesListener, MovimientoAgenteListener {
 	
 	/* MovimientoAgenteListener */
 	
@@ -60,18 +42,4 @@ public interface ProcesosJugabilidad extends MejorarEstadisticasListener, Aument
 
 	@Override
 	void chequearInfectadosEnMapa();
-	
-	/* AumentarDificultadListener */
-	
-	@Override
-	void aumentarDificultad();
-
-	@Override
-	void aumentarVelocidadSpawn();
-
-	@Override
-	void aumentarDuracionOleada();
-
-	@Override
-	void aumentarVelocidadInfectado(Infectado infectado);
 }

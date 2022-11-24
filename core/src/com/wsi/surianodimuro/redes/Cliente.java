@@ -39,12 +39,12 @@ public class Cliente extends Thread implements Disposable {
 		offline = false;
 
 		while (!fin) {
-			System.out.println(".");
+//			System.out.println(".");	// NO BORRAR ESTA LINEA - DESCOMENTAR ESTA LINEA
 			if (!offline) {
 				byte[] datos = new byte[1024];
 				DatagramPacket datagrama = new DatagramPacket(datos, datos.length);
 				try {
-					System.out.println("- Escuchando mensajes ...");
+//					System.out.println("- Escuchando mensajes ...");
 					socket.receive(datagrama);
 					procesarMensaje(datagrama);
 				} catch (IOException e) {
@@ -78,7 +78,7 @@ public class Cliente extends Thread implements Disposable {
 	public void procesarMensaje(DatagramPacket datagrama) {
 
 		String mensaje = new String(datagrama.getData()).trim();
-		System.out.println("- Mensaje: " + mensaje);
+//		System.out.println("- Mensaje: " + mensaje);
 
 		String[] mensajeParametrizado = mensaje.split("#");
 
@@ -214,24 +214,28 @@ public class Cliente extends Thread implements Disposable {
 				final int numAgente = Integer.parseInt(mensajeParametrizado[1]);
 				Globales.redListener.resetearEstadosAgente(numAgente);
 			}
+			
+			
 
 			/* CONTROLAR DE ACA PARA ABAJO */
 			
 			else if (mensajeParametrizado[0].equals(MensajesServidor.SPAWNEAR_INFECTADO.getMensaje())) {
+				
 				final String tipoInfectado = mensajeParametrizado[1];
-				final int numMonstruo = Integer.parseInt(mensajeParametrizado[2]);
+				final int numInfectado = Integer.parseInt(mensajeParametrizado[2]);
 				final float nuevaPosX = Float.parseFloat(mensajeParametrizado[3]);
 				final float nuevaPosY = Float.parseFloat(mensajeParametrizado[4]);
+				
 				Gdx.app.postRunnable(new Runnable() {
 					@Override
 					public void run() {
-						Globales.redListener.procesarSpawnInfectado(tipoInfectado, numMonstruo, nuevaPosX, nuevaPosY);
+						Globales.redListener.procesarSpawnInfectado(tipoInfectado, numInfectado, nuevaPosX, nuevaPosY);
 					}
 				});
 			}
 
 			// TODO ProcesarMovimiento
-			else if (mensajeParametrizado[0].equals(MensajesServidor.MOVER_INFECTADO_IZQUIERDA.getMensaje())) {
+//			else if (mensajeParametrizado[0].equals(MensajesServidor.MOVER_INFECTADO_IZQUIERDA.getMensaje())) {
 //				int indiceInfectado = Integer.parseInt(mensajeParametrizado[1]);
 //				if (Globales.infectados.size() > 0) {
 //					System.out.println("===> Hay que mover a la izquierda un infectado");
@@ -240,72 +244,72 @@ public class Cliente extends Thread implements Disposable {
 			}
 
 			// TODO ProcesarMovimiento
-			else if (mensajeParametrizado[0].equals(MensajesServidor.MOVER_INFECTADO_DERECHA.getMensaje())) {
+//			else if (mensajeParametrizado[0].equals(MensajesServidor.MOVER_INFECTADO_DERECHA.getMensaje())) {
 //				int indiceInfectado = Integer.parseInt(mensajeParametrizado[1]);
 //				if (Globales.infectados.size() > 0) {
 //					System.out.println("===> Hay que mover a la derecha un infectado");
 //					Globales.redListener.moverInfectadoDerecha(indiceInfectado);
 //				}
-			}
+//			}
 
-			else if (mensajeParametrizado[0].equals(MensajesServidor.ESCAPE_MONSTRUO.getMensaje())
-					|| (mensajeParametrizado[0].equals(MensajesServidor.ESCAPE_NINIOS.getMensaje()))) {
-				final String tipoEscape = mensajeParametrizado[0];
-				Gdx.app.postRunnable(new Runnable() {
-					public void run() {
-						Globales.redListener.actualizarEscape(tipoEscape);
-					}
-				});
-			}
+//			else if (mensajeParametrizado[0].equals(MensajesServidor.ESCAPE_MONSTRUO.getMensaje())
+//					|| (mensajeParametrizado[0].equals(MensajesServidor.ESCAPE_NINIOS.getMensaje()))) {
+//				final String tipoEscape = mensajeParametrizado[0];
+//				Gdx.app.postRunnable(new Runnable() {
+//					public void run() {
+//						Globales.redListener.actualizarEscape(tipoEscape);
+//					}
+//				});
+//			}
 
-			else if (mensajeParametrizado[0].equals(MensajesServidor.AUMENTAR_RAPIDEZ.getMensaje())) {
-				Globales.redListener.actualizarRapidez();
-			}
+//			else if (mensajeParametrizado[0].equals(MensajesServidor.AUMENTAR_RAPIDEZ.getMensaje())) {
+//				Globales.redListener.actualizarRapidez();
+//			}
+//
+//			else if (mensajeParametrizado[0].equals(MensajesServidor.AUMENTAR_ALCANCE.getMensaje())) {
+//				Globales.redListener.actualizarAlcance();
+//			}
+//
+//			else if (mensajeParametrizado[0].equals(MensajesServidor.AUMENTAR_DISPARO.getMensaje())) {
+//				Globales.redListener.actualizarDisparo();
+//			}
+//
+//			else if (mensajeParametrizado[0].equals(MensajesServidor.AUMENTAR_VIDA_AGENTE.getMensaje())) {
+//				Gdx.app.postRunnable(new Runnable() {
+//					public void run() {
+//						Globales.redListener.aumentarVidaAgente();
+//					}
+//				});
+//			}
+//
+//			else if (mensajeParametrizado[0].equals(MensajesServidor.ACTUALIZAR_VIDA_AGENTE.getMensaje())) {
+//				Globales.redListener.actualizarVidaAgente();
+//			}
+//
+//			else if (mensajeParametrizado[0].equals(MensajesServidor.ACTUALIZAR_CAJA_MENSAJES.getMensaje())) {
+//				final String cajaMensaje = mensajeParametrizado[1];
+//				Globales.redListener.actualizarCajaMensaje(cajaMensaje);
+//			}
+//
+//			else if (mensajeParametrizado[0].equals(MensajesServidor.ACTUALIZAR_INDICADOR_GRITO.getMensaje())) {
+//				final String sustoPuntos = mensajeParametrizado[1];
+//				Globales.redListener.actualizarSustoPuntos(sustoPuntos);
+//			}
+//
+//			else if (mensajeParametrizado[0].equals(MensajesServidor.AUMENTAR_VELOCIDAD_SPAWN.getMensaje())) {
+//				Globales.redListener.aumentarVelocidadSpawnRed();
+//			}
+//
+//			else if (mensajeParametrizado[0].equals(MensajesServidor.AUMENTAR_DURACION_OLEADA.getMensaje())) {
+//				Globales.redListener.aumentarDuracionOleadaRed();
+//			}
+//
+//			else if (mensajeParametrizado[0].equals(MensajesServidor.ACTUALIZAR_INDICADOR_OLEADA.getMensaje())) {
+//				final String numOleada = mensajeParametrizado[1];
+//				Globales.redListener.actualizarNumOleada(numOleada);
+//			}
 
-			else if (mensajeParametrizado[0].equals(MensajesServidor.AUMENTAR_ALCANCE.getMensaje())) {
-				Globales.redListener.actualizarAlcance();
-			}
-
-			else if (mensajeParametrizado[0].equals(MensajesServidor.AUMENTAR_DISPARO.getMensaje())) {
-				Globales.redListener.actualizarDisparo();
-			}
-
-			else if (mensajeParametrizado[0].equals(MensajesServidor.AUMENTAR_VIDA_AGENTE.getMensaje())) {
-				Gdx.app.postRunnable(new Runnable() {
-					public void run() {
-						Globales.redListener.aumentarVidaAgente();
-					}
-				});
-			}
-
-			else if (mensajeParametrizado[0].equals(MensajesServidor.ACTUALIZAR_VIDA_AGENTE.getMensaje())) {
-				Globales.redListener.actualizarVidaAgente();
-			}
-
-			else if (mensajeParametrizado[0].equals(MensajesServidor.ACTUALIZAR_CAJA_MENSAJES.getMensaje())) {
-				final String cajaMensaje = mensajeParametrizado[1];
-				Globales.redListener.actualizarCajaMensaje(cajaMensaje);
-			}
-
-			else if (mensajeParametrizado[0].equals(MensajesServidor.ACTUALIZAR_INDICADOR_GRITO.getMensaje())) {
-				final String sustoPuntos = mensajeParametrizado[1];
-				Globales.redListener.actualizarSustoPuntos(sustoPuntos);
-			}
-
-			else if (mensajeParametrizado[0].equals(MensajesServidor.AUMENTAR_VELOCIDAD_SPAWN.getMensaje())) {
-				Globales.redListener.aumentarVelocidadSpawnRed();
-			}
-
-			else if (mensajeParametrizado[0].equals(MensajesServidor.AUMENTAR_DURACION_OLEADA.getMensaje())) {
-				Globales.redListener.aumentarDuracionOleadaRed();
-			}
-
-			else if (mensajeParametrizado[0].equals(MensajesServidor.ACTUALIZAR_INDICADOR_OLEADA.getMensaje())) {
-				final String numOleada = mensajeParametrizado[1];
-				Globales.redListener.actualizarNumOleada(numOleada);
-			}
-
-		}
+//		}
 	}
 
 	public void reiniciarCliente() {

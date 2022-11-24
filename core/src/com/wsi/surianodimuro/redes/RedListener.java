@@ -18,13 +18,13 @@ public interface RedListener {
 	void resetearEstadosAgente(int numCliente);
 
 	void procesarSpawnInfectado(String tipoInfectado, int numInfectado, float x, float y);
-	void moverInfectadoIzquierda(int indiceInfectado);
-	void moverInfectadoDerecha(int indiceInfectado);
+//	void moverInfectadoIzquierda(int indiceInfectado);
+//	void moverInfectadoDerecha(int indiceInfectado);
 	
-	void actualizarEscape(String mensaje);
+//	void actualizarEscape(String mensaje);
 	
 	void aumentarVidaAgente();
-	void actualizarVidaAgente();
+//	void actualizarVidaAgente();
 	
 	void actualizarCajaMensaje(String cajaMensaje);
 	

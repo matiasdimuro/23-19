@@ -2,15 +2,10 @@ package com.wsi.surianodimuro.pantallas.juego;
 
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.wsi.surianodimuro.enumeradores.Infectados;
-import com.wsi.surianodimuro.enumeradores.Monstruos;
-import com.wsi.surianodimuro.enumeradores.Ninios;
+import com.wsi.surianodimuro.interfaces.AumentarDificultadListener;
+import com.wsi.surianodimuro.interfaces.MejorarEstadisticasListener;
 import com.wsi.surianodimuro.interfaces.ProcesamientoEntradas;
-import com.wsi.surianodimuro.interfaces.ProcesosJugabilidad;
-import com.wsi.surianodimuro.objetos.Ascensor;
-import com.wsi.surianodimuro.objetos.PuertaSpawn;
 import com.wsi.surianodimuro.pantallas.Pantalla;
 import com.wsi.surianodimuro.pantallas.juego.entradas.EntradasComportamientoAgente;
 import com.wsi.surianodimuro.pantallas.juego.entradas.EntradasMenuJuegoTerminado;
@@ -24,7 +19,7 @@ import com.wsi.surianodimuro.utilidades.ConfigGraficos;
 import com.wsi.surianodimuro.utilidades.Globales;
 import com.wsi.surianodimuro.utilidades.Utiles;
 
-public abstract class PantallaOleadas extends Pantalla implements ProcesosJugabilidad {
+public abstract class PantallaOleadas extends Pantalla implements MejorarEstadisticasListener, AumentarDificultadListener {
 	
 	protected OleadaInfo oleadaInfo;
 	protected DatosPartida datosPartida;
@@ -60,11 +55,7 @@ public abstract class PantallaOleadas extends Pantalla implements ProcesosJugabi
 		Globales.infectados = infectados;
 		Globales.proyectilesDisparados = proyectilesDisparados;
 		
-		Globales.mejorarEstadisticasListener = this;
-		Globales.aumentarDificultadListener = this;
-		Globales.actividadInfectadosListener = this;
-		Globales.actividadProyectilesListener = this;
-		Globales.movimientoAgenteListener = this;
+		
 	}
 
 	@Override
@@ -185,47 +176,7 @@ public abstract class PantallaOleadas extends Pantalla implements ProcesosJugabi
 		}
 	}
 
-	@Override
-	public void spawnearInfectado() {
-
-		int random = Utiles.rand.nextInt(Infectados.values().length);
-		Infectado infectado = (random == 0) ? Ninios.retornarNinio(Utiles.rand.nextInt(Ninios.values().length))
-				: Monstruos.retornarMonstruo(Utiles.rand.nextInt(Monstruos.values().length));
-
-		int numPuerta = Utiles.rand.nextInt(mapa.getPuertasSpawn().length);
-		float x = mapa.getPuertasSpawn()[numPuerta].getPosicion().x
-				+ mapa.getPuertasSpawn()[numPuerta].getDimensiones()[0] / 2;
-		float y = mapa.getPuertasSpawn()[numPuerta].getPosicion().y;
-
-		if (oleadaInfo.aumentarVelocidadInfectados) {
-			aumentarVelocidadInfectado(infectado);
-		}
-
-		infectado.setPosicion(x, y);
-		infectados.add(infectado);
-	}
-
-	@Override
-	public void chequearInfectadosEnMapa() {
-
-		ArrayList<Infectado> infectadosFueraDeMapa = new ArrayList<Infectado>();
-
-		Rectangle zonaEscape = mapa.getZonaEscape().getRectangle();
-		PuertaSpawn puerta = mapa.getPuertasSpawn()[0];
-
-		for (Infectado infectado : infectados) {
-			float x = infectado.getPosicion().x;
-			if (((infectado.controlador.mirandoDerecha) && (x >= zonaEscape.getX() + zonaEscape.getWidth()))
-					|| ((infectado.controlador.mirandoIzquierda)
-							&& (x + infectado.getDimensiones()[0] <= puerta.getPosicion().x))) {
-				infectadosFueraDeMapa.add(infectado);
-			}
-		}
-
-		for (Infectado infectadoFueraDeMapa : infectadosFueraDeMapa) {
-			infectados.remove(infectadoFueraDeMapa);
-		}
-	}
+	
 
 	@Override
 	public void aumentarDuracionOleada() {
@@ -308,43 +259,5 @@ public abstract class PantallaOleadas extends Pantalla implements ProcesosJugabi
 
 	@Override
 	public void aumentarVelDisparo() {
-	}
-
-	@Override
-	public boolean chequearColisiones() {
-		return false;
-	}
-
-	@Override
-	public Ascensor chequearUbicacionEnAscensor() {
-		return null;
-	}
-
-	@Override
-	public void procesarMovimientoVertical(Ascensor ascensorOrigen) {
-	}
-
-	@Override
-	public void chequearColisionProyectiles() {
-	}
-
-	@Override
-	public void chequearProyectilesImpactados() {
-	}
-
-	@Override
-	public void procesarTrayectoriaProyectiles() {
-	}
-
-	@Override
-	public void detectarEscapes() {
-	}
-
-	@Override
-	public void detectarInfecciones() {
-	}
-
-	@Override
-	public void chequearVidaInfectados() {
 	}
 }

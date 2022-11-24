@@ -112,16 +112,16 @@ public class TimerMultiJug extends Thread {
 
 		if ((Globales.oleadaInfo.oleadaComenzada) && (!Globales.oleadaInfo.oleadaEnCurso)) {
 			cronometro += Gdx.graphics.getDeltaTime();
-//			if (!Globales.sonidos.musicaEntreRondaSonando) {
-//				Globales.sonidos.sonarMusicaEntreRonda();
-//			}
+			if (!Globales.sonidos.musicaEntreRondaSonando) {
+				Globales.sonidos.sonarMusicaEntreRonda();
+			}
 			if (cronometro >= TiempoProcesos.tpoEntreOleadas) {
 				Globales.oleadaInfo.numOleada += 1;
 				Globales.oleadaInfo.mejoraEfectuada = false;
 				Globales.oleadaInfo.oleadaComenzada = false;
 				Globales.oleadaInfo.actualizarIndicador = true;
 				Globales.oleadaInfo.dificultadAumentada = false;
-//				Globales.sonidos.terminarMusicaEntreRonda();
+				Globales.sonidos.terminarMusicaEntreRonda();
 				cronometro = 0;
 			}
 			Globales.cajaMensajes.setTexto(Mensajes.FIN_OLEADA.getMensaje());
@@ -140,7 +140,6 @@ public class TimerMultiJug extends Thread {
 			/* (A) Spawn de Entes */
 			if ((cronometro >= TiempoProcesos.tpoRetardoSpawns) && (duracionOleada < TiempoProcesos.duracionOleada)) {
 				cronometro = 0;
-				Globales.actividadInfectadosListener.spawnearInfectado();
 				Globales.cajaMensajes.setTexto(Mensajes.COMIENZO_OLEADA.getMensaje());
 			}
 
@@ -149,7 +148,7 @@ public class TimerMultiJug extends Thread {
 				Globales.oleadaInfo.oleadaEnCurso = false;
 				duracionOleada = 0;
 				cronometro = 0;
-//				Globales.sonidos.terminarMusicaDeFondo();
+				Globales.sonidos.terminarMusicaDeFondo();
 			}
 		}
 	}
@@ -163,9 +162,9 @@ public class TimerMultiJug extends Thread {
 				Globales.oleadaInfo.oleadaEnCurso = true;
 				cronometro = 0;
 			}
-//			if (!Globales.sonidos.musicaDeFondoSonando) {
-//				Globales.sonidos.sonarMusicaDeFondo();
-//			}			
+			if (!Globales.sonidos.musicaDeFondoSonando) {
+				Globales.sonidos.sonarMusicaDeFondo();
+			}			
 			Globales.cajaMensajes.setTexto(Mensajes.PREVIA_OLEADA.getMensaje());
 		}
 	}

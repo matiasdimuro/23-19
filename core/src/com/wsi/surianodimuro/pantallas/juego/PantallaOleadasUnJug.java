@@ -11,9 +11,13 @@ import com.wsi.surianodimuro.enumeradores.Ascensores;
 import com.wsi.surianodimuro.enumeradores.DireccionesDisparo;
 import com.wsi.surianodimuro.enumeradores.Infectados;
 import com.wsi.surianodimuro.enumeradores.Mensajes;
+import com.wsi.surianodimuro.enumeradores.Monstruos;
+import com.wsi.surianodimuro.enumeradores.Ninios;
 import com.wsi.surianodimuro.enumeradores.Proyectiles;
 import com.wsi.surianodimuro.interfaces.InfectadosListables;
+import com.wsi.surianodimuro.interfaces.ProcesosJugabilidad;
 import com.wsi.surianodimuro.objetos.Ascensor;
+import com.wsi.surianodimuro.objetos.PuertaSpawn;
 import com.wsi.surianodimuro.pantallas.juego.hud.HudUnJug;
 import com.wsi.surianodimuro.personajes.Infectado;
 import com.wsi.surianodimuro.personajes.agentes.Agente;
@@ -25,7 +29,7 @@ import com.wsi.surianodimuro.utilidades.Globales;
 import com.wsi.surianodimuro.utilidades.Utiles;
 import com.wsi.surianodimuro.utilidades.timers.TimerUnJug;
 
-public final class PantallaOleadasUnJug extends PantallaOleadas {
+public final class PantallaOleadasUnJug extends PantallaOleadas implements ProcesosJugabilidad {
 
 	private Agente jugadorUno;
 	private HudUnJug hud;
@@ -33,9 +37,17 @@ public final class PantallaOleadasUnJug extends PantallaOleadas {
 	private TimerUnJug timer;
 	
 	public PantallaOleadasUnJug() {
+		
 		super();
+		
 		jugadorUno = new AgenteUno();
 		Globales.jugadores.add(jugadorUno);
+		
+		Globales.mejorarEstadisticasListener = this;
+		Globales.aumentarDificultadListener = this;
+		Globales.actividadInfectadosListener = this;
+		Globales.actividadProyectilesListener = this;
+		Globales.movimientoAgenteListener = this;
 	}
 
 	@Override
@@ -459,5 +471,47 @@ public final class PantallaOleadasUnJug extends PantallaOleadas {
 	public void aumentarVelDisparo() {
 		jugadorUno.getArmamento()[0].aumentarVelocidadDisparo();
 		jugadorUno.getArmamento()[1].aumentarVelocidadDisparo();
+	}
+	
+	@Override
+	public void spawnearInfectado() {
+
+		int random = Utiles.rand.nextInt(Infectados.values().length);
+		Infectado infectado = (random == 0) ? Ninios.retornarNinio(Utiles.rand.nextInt(Ninios.values().length))
+				: Monstruos.retornarMonstruo(Utiles.rand.nextInt(Monstruos.values().length));
+
+		int numPuerta = Utiles.rand.nextInt(mapa.getPuertasSpawn().length);
+		float x = mapa.getPuertasSpawn()[numPuerta].getPosicion().x
+				+ mapa.getPuertasSpawn()[numPuerta].getDimensiones()[0] / 2;
+		float y = mapa.getPuertasSpawn()[numPuerta].getPosicion().y;
+
+		if (oleadaInfo.aumentarVelocidadInfectados) {
+			aumentarVelocidadInfectado(infectado);
+		}
+
+		infectado.setPosicion(x, y);
+		infectados.add(infectado);
+	}
+	
+	@Override
+	public void chequearInfectadosEnMapa() {
+
+		ArrayList<Infectado> infectadosFueraDeMapa = new ArrayList<Infectado>();
+
+		Rectangle zonaEscape = mapa.getZonaEscape().getRectangle();
+		PuertaSpawn puerta = mapa.getPuertasSpawn()[0];
+
+		for (Infectado infectado : infectados) {
+			float x = infectado.getPosicion().x;
+			if (((infectado.controlador.mirandoDerecha) && (x >= zonaEscape.getX() + zonaEscape.getWidth()))
+					|| ((infectado.controlador.mirandoIzquierda)
+							&& (x + infectado.getDimensiones()[0] <= puerta.getPosicion().x))) {
+				infectadosFueraDeMapa.add(infectado);
+			}
+		}
+
+		for (Infectado infectadoFueraDeMapa : infectadosFueraDeMapa) {
+			infectados.remove(infectadoFueraDeMapa);
+		}
 	}
 }
