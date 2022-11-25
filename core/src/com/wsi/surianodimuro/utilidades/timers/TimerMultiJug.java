@@ -34,8 +34,14 @@ public class TimerMultiJug extends Thread {
 		tiempoMuertoDisparoJugDos = 0;
 		tiempoMuertoInfeccionJugUno = 0;
 		tiempoMuertoInfeccionJugDos = 0;
-		jugadorUno = Globales.jugadores.get(0);
-		jugadorDos = Globales.jugadores.get(1);
+		
+		if (Globales.cliente.numCliente == 1) {
+			jugadorUno = Globales.jugadores.get(0);
+			jugadorDos = Globales.jugadores.get(1);
+		} else {
+			jugadorUno = Globales.jugadores.get(1);
+			jugadorDos = Globales.jugadores.get(0);
+		}
 	}
 
 	@Override
@@ -111,9 +117,11 @@ public class TimerMultiJug extends Thread {
 	public void procesarEntreTiempoOleadas() {
 
 		if ((Globales.oleadaInfo.oleadaComenzada) && (!Globales.oleadaInfo.oleadaEnCurso)) {
+//			System.out.println("--> Procesando Entre tiempo Oleadas");
 			cronometro += Gdx.graphics.getDeltaTime();
 			if (!Globales.sonidos.musicaEntreRondaSonando) {
 				Globales.sonidos.sonarMusicaEntreRonda();
+//				System.out.println("-> Musica entre ronda sonando.");
 			}
 			if (cronometro >= TiempoProcesos.tpoEntreOleadas) {
 				Globales.oleadaInfo.numOleada += 1;
@@ -122,6 +130,7 @@ public class TimerMultiJug extends Thread {
 				Globales.oleadaInfo.actualizarIndicador = true;
 				Globales.oleadaInfo.dificultadAumentada = false;
 				Globales.sonidos.terminarMusicaEntreRonda();
+//				System.out.println("-> Musica entre ronda terminada.");
 				cronometro = 0;
 			}
 			Globales.cajaMensajes.setTexto(Mensajes.FIN_OLEADA.getMensaje());
@@ -130,7 +139,9 @@ public class TimerMultiJug extends Thread {
 
 	public void procesarTpoTranscurridoOleadas() {
 
+		
 		if ((Globales.oleadaInfo.oleadaComenzada) && (Globales.oleadaInfo.oleadaEnCurso)) {
+//			System.out.println("--> Procesando Tiempo transcurrido Inicio Oleadas");
 
 			duracionOleada += Gdx.graphics.getDeltaTime();
 			cronometro += Gdx.graphics.getDeltaTime();
@@ -149,6 +160,7 @@ public class TimerMultiJug extends Thread {
 				duracionOleada = 0;
 				cronometro = 0;
 				Globales.sonidos.terminarMusicaDeFondo();
+//				System.out.println("-> Musica de fondo terminada.");
 			}
 		}
 	}
@@ -156,6 +168,7 @@ public class TimerMultiJug extends Thread {
 	public void procesarRetardoInicioOleadas() {
 
 		if (!Globales.oleadaInfo.oleadaComenzada) {
+//			System.out.println("--> Procesando retardo Inicio Oleadas");
 			cronometro += Gdx.graphics.getDeltaTime();
 			if (cronometro >= TiempoProcesos.tpoRetardoInicio) {
 				Globales.oleadaInfo.oleadaComenzada = true;
@@ -164,6 +177,7 @@ public class TimerMultiJug extends Thread {
 			}
 			if (!Globales.sonidos.musicaDeFondoSonando) {
 				Globales.sonidos.sonarMusicaDeFondo();
+//				System.out.println("-> Poniendo musica de fondo.");
 			}			
 			Globales.cajaMensajes.setTexto(Mensajes.PREVIA_OLEADA.getMensaje());
 		}

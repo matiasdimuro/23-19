@@ -20,6 +20,11 @@ public interface RedListener {
 	void procesarSpawnInfectado(String tipoInfectado, int numInfectado, float x, float y);
 	void moverInfectadoIzquierda(int indice);
 	void moverInfectadoDerecha(int indice);
+	void restarVidaInfectado(int indiceInfectado, int nuevaVida, String rutaSonidoImpacto);
+	void eliminarInfectado(int indiceInfectado);
+	
+	void actualizarPosProyectil(int indiceProyectil, float x, float y);
+	void eliminarProyectil(int indiceProyectil);
 	
 //	void actualizarEscape(String mensaje);
 	

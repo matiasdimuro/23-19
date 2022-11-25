@@ -11,6 +11,7 @@ import com.wsi.surianodimuro.personajes.Infectado;
 import com.wsi.surianodimuro.personajes.agentes.Agente;
 import com.wsi.surianodimuro.personajes.agentes.AgenteDos;
 import com.wsi.surianodimuro.personajes.agentes.AgenteUno;
+import com.wsi.surianodimuro.personajes.agentes.armamento.proyectiles.ProyectilDisparado;
 import com.wsi.surianodimuro.redes.InfoRed;
 import com.wsi.surianodimuro.redes.RedListener;
 import com.wsi.surianodimuro.utilidades.ConfigGraficos;
@@ -93,6 +94,10 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 
 				jugadorUno.renderizar();
 				jugadorDos.renderizar();
+				
+				for (ProyectilDisparado proyectilDisparado : proyectilesDisparados) {
+					proyectilDisparado.proyectil.renderizar();
+				}
 
 				Utiles.batch.end();
 				mostrarIndicadores();
@@ -151,6 +156,10 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 		hud.getIndicadorGrito().mostrarIndicador();
 	}
 
+	
+	
+	
+	
 	@Override
 	public void moverAgenteIzquierda(int numAgente) {
 
@@ -176,7 +185,7 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 
 		Globales.jugadores.get(numAgente).controlador.arriba = true;
 		Globales.jugadores.get(numAgente).usarAscensor(nuevaPosX, nuevaPosY);
-
+		sonidos.sonarAscensor();
 	}
 
 	@Override
@@ -184,6 +193,7 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 
 		Globales.jugadores.get(numAgente).controlador.abajo = true;
 		Globales.jugadores.get(numAgente).usarAscensor(nuevaPosX, nuevaPosY);
+		 sonidos.sonarAscensor();
 	}
 
 	@Override
@@ -198,6 +208,10 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 		Globales.jugadores.get(numAgente).controlador.disparando = true;
 		Globales.jugadores.get(numAgente).dispararProyectil();
 		Globales.jugadores.get(numAgente).controlador.puedeDisparar = false;
+		
+//		if (numAgente == Globales.cliente.numCliente - 1) {
+			Gdx.audio.newSound(Gdx.files.internal(Globales.jugadores.get(numAgente).getArmamento()[Globales.jugadores.get(numAgente).armaEnUso].getTipoProyectil().getRutaSonidoDisparo())).play();
+//		}
 	}
 
 	@Override
@@ -224,6 +238,10 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 		Globales.jugadores.get(numAgente).controlador.resetearEstados();
 	}
 
+	
+	
+	
+	
 	@Override
 	public void procesarSpawnInfectado(String tipoInfectado, int numInfectado, float x, float y) {
 
@@ -239,14 +257,11 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 
 		nuevoInfectado.setPosicion(x, y);
 		infectados.add(nuevoInfectado);
-		
-		System.out.println("-> Spawn detectado (" + infectados.size() + " infectados)");
 	}
 
 	@Override
 	public void moverInfectadoIzquierda(int indice) {
-		
-		if (indice <= infectados.size()) {
+		if ((infectados.size() > 0) && (indice < infectados.size())) {
 			infectados.get(indice).controlador.mirandoIzquierda = true;
 			infectados.get(indice).controlador.mirandoDerecha = false;
 			infectados.get(indice).moverseIzquierda();
@@ -256,17 +271,43 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 
 	@Override
 	public void moverInfectadoDerecha(int indice) {
-		
-		System.out.println("Indice: " + indice);
-		System.out.println("Infectados totales: " + infectados.size());
-		System.out.println("Infectado:" + infectados.get(indice));
-		
-		if (indice <= infectados.size()) {
+		if ((infectados.size() > 0) && (indice < infectados.size())) {
 			infectados.get(indice).controlador.mirandoDerecha = true;
 			infectados.get(indice).controlador.mirandoIzquierda = false;
 			infectados.get(indice).moverseDerecha();
 			infectados.get(indice).caminarDerecha();
 		}
+	}
+	
+	@Override
+	public void restarVidaInfectado(int indiceInfectado, int nuevaVida, String rutaSonidoImpacto) {
+		if ((infectados.size() > 0) && (indiceInfectado < infectados.size())) {
+			infectados.get(indiceInfectado).vida = nuevaVida;
+			Gdx.audio.newSound(Gdx.files.internal(rutaSonidoImpacto)).play();
+		}
+	}
+	
+	@Override
+	public void eliminarInfectado(int indiceInfectado) {
+		if ((infectados.size() > 0) && (indiceInfectado < infectados.size())) {
+			infectados.remove(indiceInfectado);
+		}
+	}
+	
+	
+	
+	
+	
+	@Override
+	public void actualizarPosProyectil(int indiceProyectil, float x, float y) {
+		if ((proyectilesDisparados.size() > 0) && (indiceProyectil < proyectilesDisparados.size())) {
+			proyectilesDisparados.get(indiceProyectil).proyectil.setPosicion(x, y);
+		}
+	}
+	
+	@Override
+	public void eliminarProyectil(int indiceProyectil) {
+		proyectilesDisparados.remove(indiceProyectil);
 	}
 
 //	@Override

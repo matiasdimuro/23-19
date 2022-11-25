@@ -214,8 +214,6 @@ public class Cliente extends Thread implements Disposable {
 				final int numAgente = Integer.parseInt(mensajeParametrizado[1]);
 				Globales.redListener.resetearEstadosAgente(numAgente);
 			}
-
-			/* CONTROLAR DE ACA PARA ABAJO */
 			
 			else if (mensajeParametrizado[0].equals(MensajesServidor.SPAWNEAR_INFECTADO.getMensaje())) {
 				
@@ -232,16 +230,38 @@ public class Cliente extends Thread implements Disposable {
 				});
 			}
 
-			// TODO ProcesarMovimiento
 			else if (mensajeParametrizado[0].equals(MensajesServidor.MOVER_INFECTADO_IZQUIERDA.getMensaje())) {
 				int indiceInfectado = Integer.parseInt(mensajeParametrizado[1]);
 				Globales.redListener.moverInfectadoIzquierda(indiceInfectado);
 			}
 
-			// TODO ProcesarMovimiento
 			else if (mensajeParametrizado[0].equals(MensajesServidor.MOVER_INFECTADO_DERECHA.getMensaje())) {
 				int indiceInfectado = Integer.parseInt(mensajeParametrizado[1]);
 				Globales.redListener.moverInfectadoDerecha(indiceInfectado);
+			}
+			
+			else if (mensajeParametrizado[0].equals(MensajesServidor.ACTUALIZAR_POS_PROYECTIL.getMensaje())) {
+				int indiceProyectil = Integer.parseInt(mensajeParametrizado[1]);
+				float x = Float.parseFloat(mensajeParametrizado[2]);
+				float y = Float.parseFloat(mensajeParametrizado[3]);
+				Globales.redListener.actualizarPosProyectil(indiceProyectil, x, y);
+			}
+			
+			else if (mensajeParametrizado[0].equals(MensajesServidor.ELIMINAR_PROYECTIL.getMensaje())) {
+				int indiceProyectil = Integer.parseInt(mensajeParametrizado[1]);
+				Globales.redListener.eliminarProyectil(indiceProyectil);
+			}
+			
+			else if (mensajeParametrizado[0].equals(MensajesServidor.RESTAR_VIDA_INFECTADO.getMensaje())) {
+				int indiceInfectado = Integer.parseInt(mensajeParametrizado[1]);
+				int nuevaVida = Integer.parseInt(mensajeParametrizado[2]);
+				String rutaSonidoImpacto = mensajeParametrizado[3];
+				Globales.redListener.restarVidaInfectado(indiceInfectado, nuevaVida, rutaSonidoImpacto);
+			}
+			
+			else if (mensajeParametrizado[0].equals(MensajesServidor.ELIMINAR_INFECTADO.getMensaje())) {
+				int indiceInfectado = Integer.parseInt(mensajeParametrizado[1]);
+				Globales.redListener.eliminarInfectado(indiceInfectado);
 			}
 
 //			else if (mensajeParametrizado[0].equals(MensajesServidor.ESCAPE_MONSTRUO.getMensaje())

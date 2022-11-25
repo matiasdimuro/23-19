@@ -116,7 +116,7 @@ public final class EntradasComportamientoAgente implements ProcesamientoEntradas
 
 			if (Gdx.input.isKeyPressed(Keys.C)) {
 				Globales.jugadores.get(numAgente).controlador.disparando = true;
-				Globales.jugadores.get(numAgente).dispararProyectil();
+//				Globales.jugadores.get(numAgente).dispararProyectil();
 				Globales.jugadores.get(numAgente).controlador.puedeDisparar = false;
 			
 				if (InfoRed.conexionGlobalEstablecida) {
@@ -127,7 +127,7 @@ public final class EntradasComportamientoAgente implements ProcesamientoEntradas
 			else if ((Gdx.input.isKeyJustPressed(Keys.V))
 					&& (Globales.jugadores.get(numAgente).getSustoPuntos() >= Globales.oleadaInfo.GRITOS_ULTIMATE)) {
 				Globales.jugadores.get(numAgente).controlador.disparando = true;
-				Globales.jugadores.get(numAgente).dispararUltimate();
+//				Globales.jugadores.get(numAgente).dispararUltimate();
 				Globales.jugadores.get(numAgente).actualizarSustoPuntos(-Globales.oleadaInfo.GRITOS_ULTIMATE);
 				Globales.jugadores.get(numAgente).controlador.puedeDisparar = false;
 

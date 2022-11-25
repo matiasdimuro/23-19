@@ -47,7 +47,6 @@ public final class PantallaOleadasUnJug extends PantallaOleadas implements Proce
 		Globales.aumentarDificultadListener = this;
 		Globales.actividadInfectadosListener = this;
 		Globales.actividadProyectilesListener = this;
-		Globales.movimientoAgenteListener = this;
 	}
 
 	@Override

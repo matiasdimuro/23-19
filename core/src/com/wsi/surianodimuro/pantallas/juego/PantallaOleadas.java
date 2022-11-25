@@ -61,7 +61,7 @@ public abstract class PantallaOleadas extends Pantalla implements MejorarEstadis
 		Globales.infectados = infectados;
 		Globales.proyectilesDisparados = proyectilesDisparados;
 		
-		
+		Globales.movimientoAgenteListener = this;
 	}
 
 	@Override

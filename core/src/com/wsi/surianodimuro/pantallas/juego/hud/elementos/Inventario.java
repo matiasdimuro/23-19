@@ -69,7 +69,9 @@ public abstract class Inventario implements Renderizable {
 			seleccion.setSize(ANCHO_ITEM, 2);
 		}
 		
-		seleccion.setPosition(elementos[Globales.jugadores.get(0).armaEnUso].getPosicion().x, elementos[Globales.jugadores.get(0).armaEnUso].getPosicion().y - 7);
+		int numAgente = Globales.cliente.numCliente - 1;
+		
+		seleccion.setPosition(elementos[Globales.jugadores.get(numAgente).armaEnUso].getPosicion().x, elementos[Globales.jugadores.get(numAgente).armaEnUso].getPosicion().y - 7);
 		seleccion.draw(Utiles.batch);
 	}
 

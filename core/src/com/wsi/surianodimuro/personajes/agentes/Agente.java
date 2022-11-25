@@ -1,6 +1,5 @@
 package com.wsi.surianodimuro.personajes.agentes;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -149,8 +148,6 @@ public abstract class Agente extends Personaje implements PersonajeJugable {
 		Globales.proyectilesDisparados.add(new ProyectilDisparado(
 				getArmamento()[armaEnUso].getTipoProyectil().retornarProyectil(),
 				(controlador.mirandoIzquierda) ? DireccionesDisparo.IZQUIERDA : DireccionesDisparo.DERECHA, x, y));
-		
-		Gdx.audio.newSound(Gdx.files.internal(armamento[armaEnUso].getTipoProyectil().getRutaSonidoDisparo())).play();
 	}
 
 	@Override
@@ -163,6 +160,8 @@ public abstract class Agente extends Personaje implements PersonajeJugable {
 
 		Globales.proyectilesDisparados.add(new ProyectilDisparado(new Ultimate(),
 				(controlador.mirandoIzquierda) ? DireccionesDisparo.IZQUIERDA : DireccionesDisparo.DERECHA, x, y));
+		
+		System.out.println("- Proyectil diaparado: " + Globales.proyectilesDisparados.size());
 	}
 
 	@Override
