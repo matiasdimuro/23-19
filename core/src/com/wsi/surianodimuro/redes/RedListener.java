@@ -26,7 +26,7 @@ public interface RedListener {
 	void actualizarPosProyectil(int indiceProyectil, float x, float y);
 	void eliminarProyectil(int indiceProyectil);
 	
-//	void actualizarEscape(String mensaje);
+	void actualizarEscape(String mensaje);
 	
 	void aumentarVidaAgente();
 //	void actualizarVidaAgente();
@@ -39,7 +39,7 @@ public interface RedListener {
 	
 	void aumentarVelocidadSpawnRed();
 	void aumentarDuracionOleadaRed();
-	void actualizarNumOleada(String numOleada);
-	void actualizarSustoPuntos(String sustoPuntos);
+	void actualizarNumOleada(/*String*/int numOleada);
+	void actualizarSustoPuntos(/*String*/int sustoPuntos);
 
 }

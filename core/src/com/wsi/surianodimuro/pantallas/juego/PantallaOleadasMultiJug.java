@@ -13,6 +13,7 @@ import com.wsi.surianodimuro.personajes.agentes.AgenteDos;
 import com.wsi.surianodimuro.personajes.agentes.AgenteUno;
 import com.wsi.surianodimuro.personajes.agentes.armamento.proyectiles.ProyectilDisparado;
 import com.wsi.surianodimuro.redes.InfoRed;
+import com.wsi.surianodimuro.redes.MensajesServidor;
 import com.wsi.surianodimuro.redes.RedListener;
 import com.wsi.surianodimuro.utilidades.ConfigGraficos;
 import com.wsi.surianodimuro.utilidades.Globales;
@@ -310,23 +311,16 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 		proyectilesDisparados.remove(indiceProyectil);
 	}
 
-//	@Override
-//	public void actualizarEscape(String mensaje) {
-//		if (mensaje.equals(MensajesServidor.ESCAPE_MONSTRUO.getMensaje())) {
-//			datosPartida.escapesRestantesMonstruos -= 1;
-//			hud.getIndicadorEscMonstruos().actualizar();
-////			Globales.cajaMensajes.setTexto(Mensajes.ESCAPE_MONSTRUO.getMensaje());
-//		} else {
-//			datosPartida.escapesRestantesNinios -= 1;
-//			hud.getIndicadorEscNinios().actualizar();
-////			Globales.cajaMensajes.setTexto(Mensajes.ESCAPE_NINIO.getMensaje());
-//		}
-//	}
+	
 
 	@Override
 	public void actualizarDisparo() {
-		jugadorUno.incrementarVelocidad();
-		jugadorDos.incrementarVelocidad();
+		for (int i = 0; i < jugadorUno.getArmamento().length; i++) {
+			jugadorUno.getArmamento()[i].aumentarVelocidadDisparo();
+		}
+		for (int i = 0; i < jugadorDos.getArmamento().length; i++) {
+			jugadorDos.getArmamento()[i].aumentarVelocidadDisparo();
+		}
 	}
 
 	@Override
@@ -339,10 +333,8 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 
 	@Override
 	public void actualizarRapidez() {
-		jugadorUno.getArmamento()[0].aumentarVelocidadDisparo();
-		jugadorUno.getArmamento()[1].aumentarVelocidadDisparo();
-		jugadorDos.getArmamento()[0].aumentarVelocidadDisparo();
-		jugadorDos.getArmamento()[1].aumentarVelocidadDisparo();
+		jugadorUno.incrementarVelocidad();
+		jugadorDos.incrementarVelocidad();
 	}
 
 	@Override
@@ -357,15 +349,34 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 //		
 //	}
 
-
+	
+	
+	// TODO: Implementar desde server
+	@Override
+	public void actualizarEscape(String mensaje) {
+		if (mensaje.equals(MensajesServidor.ESCAPE_MONSTRUO.getMensaje())) {
+			datosPartida.escapesRestantesMonstruos -= 1;
+			hud.getIndicadorEscMonstruos().actualizar();
+//			Globales.cajaMensajes.setTexto(Mensajes.ESCAPE_MONSTRUO.getMensaje());  
+			actualizarCajaMensaje(mensaje);
+		} else {
+			datosPartida.escapesRestantesNinios -= 1;
+			hud.getIndicadorEscNinios().actualizar();
+//			Globales.cajaMensajes.setTexto(Mensajes.ESCAPE_NINIO.getMensaje()); 
+			actualizarCajaMensaje(mensaje);
+		}
+	}
+	
 	@Override
 	public void actualizarCajaMensaje(String cajaMensaje) {
 		Globales.cajaMensajes.setTexto(cajaMensaje);		
 	}
 
 	@Override
-	public void actualizarNumOleada(String numOleada) {
-		hud.getIndicadorOleada().newActualizarDatos(numOleada);
+	public void actualizarNumOleada(/*String*/int numOleada) {
+//		hud.getIndicadorOleada().newActualizarDatos(numOleada);
+		Globales.oleadaInfo.numOleada = numOleada;
+		hud.getIndicadorOleada().actualizarDatos();
 	}
 
 	@Override
@@ -378,8 +389,11 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 		aumentarDuracionOleada();
 	}
 
+	// TODO: Implementar desde server
 	@Override
-	public void actualizarSustoPuntos(String sustoPuntos) {
-		hud.getIndicadorGrito().newActualizarDatos(sustoPuntos);	
+	public void actualizarSustoPuntos(/*String*/int sustoPuntos) {
+//		hud.getIndicadorGrito().newActualizarDatos(sustoPuntos);	
+		Globales.jugadores.get(0).sustoPuntos = sustoPuntos;
+		hud.getIndicadorGrito().actualizarDatos();
 	}
 }

@@ -30,7 +30,7 @@ public enum MensajesServidor {
 
 	REPRODUCIR_PROYECTIL_IMPACTADO("Reproducir proyectil impactado"),
 	
-	/*
+	/**/
 	ESCAPE_MONSTRUO("Escape monstruo"),
 	ESCAPE_NINIOS("Escape ninio"),
 	
@@ -47,7 +47,8 @@ public enum MensajesServidor {
 	
 	ACTUALIZAR_INDICADOR_OLEADA("Actualizar indicador oleada"),
 	ACTUALIZAR_INDICADOR_GRITO("Actualizar indicador grito"),
-	*/
+	/**/
+
 	TERMINAR_JUEGO("Terminar juego"),
 	EMPEZAR_JUEGO("Empezar juego");
 	

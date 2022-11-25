@@ -20,7 +20,8 @@ public abstract class Agente extends Personaje implements PersonajeJugable {
 
 	/* ====== ATRIBUTOS ====== */
 
-	private int sustoPuntos;
+//	private int sustoPuntos;
+	public int sustoPuntos;
 
 	/* ====== OBJETOS EQUIPABLES ====== */
 
