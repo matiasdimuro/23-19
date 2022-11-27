@@ -311,7 +311,6 @@ public class Cliente extends Thread implements Disposable {
 				Gdx.app.postRunnable(new Runnable() {
 					public void run() {
 						Globales.redListener.procesarInfeccionAgente(numAgente);
-						System.out.println("-> Agente infectado");
 					}
 				});
 			}

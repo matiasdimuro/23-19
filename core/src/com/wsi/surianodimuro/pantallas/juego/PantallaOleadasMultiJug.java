@@ -319,7 +319,9 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 	
 	@Override
 	public void eliminarProyectil(int indiceProyectil) {
-		proyectilesDisparados.remove(indiceProyectil);
+		if (proyectilesDisparados.size() > 0) {
+			proyectilesDisparados.remove(indiceProyectil);
+		}
 	}
 
 	
@@ -356,6 +358,10 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 
 	@Override
 	public void procesarInfeccionAgente(int numAgente) {
+		// TODO
+//		System.out.println("-> Agente " + numAgente + " infectado.");
+//		System.out.println("-> Agente Uno: " + jugadorUno.vida);
+//		System.out.println("-> Agente Dos: " + jugadorDos.vida);
 		
 		Globales.jugadores.get(numAgente).restarVida();
 		Globales.jugadores.get(numAgente).controlador.puedeInfectarse = false;
