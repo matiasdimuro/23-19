@@ -41,8 +41,4 @@ public final class ContenedorIndicadorOleada extends ContenedorGritos{
 	public void actualizarDatos() {
 		numOleada.setTexto("Oleada\n  Num " + Globales.oleadaInfo.numOleada);
 	}
-	
-	public void newActualizarDatos(String newNumOleada) {
-		numOleada.setTexto("Oleada\n  Num " + newNumOleada);
-	}
 }

@@ -3,6 +3,7 @@ package com.wsi.surianodimuro.pantallas.juego.hud.elementos;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.wsi.surianodimuro.interfaces.Renderizable;
+import com.wsi.surianodimuro.redes.InfoRed;
 import com.wsi.surianodimuro.utilidades.Globales;
 import com.wsi.surianodimuro.utilidades.Imagen;
 
@@ -10,6 +11,8 @@ public class IndicadorVidas implements Renderizable {
 
 	private Imagen emoji;
 	private Imagen[] vidas = new Imagen[3];
+	
+	private int numAgente = (InfoRed.conexionGlobalEstablecida) ? Globales.cliente.numCliente - 1 : 0;
 
 	private String[] rutaSprites = { "mapa/assets/hud/heart.png", "mapa/assets/hud/no_heart.png" };
 
@@ -18,9 +21,9 @@ public class IndicadorVidas implements Renderizable {
 		emoji = new Imagen("mapa/assets/hud/cda_1_face.png", posEmojiX, posEmojiY, ANCHO, ALTO);
 
 		final int ESPACIO = 10;
-
+		
 		for (int i = 0; i < vidas.length; i++) {
-			vidas[i] = new Imagen((i < Globales.jugadores.get(0).vida) ? rutaSprites[0] : rutaSprites[1],
+			vidas[i] = new Imagen((i < Globales.jugadores.get(numAgente).vida) ? rutaSprites[0] : rutaSprites[1],
 					posEmojiX + (ANCHO + ESPACIO) * (i + 1), posEmojiY, ANCHO, ALTO);
 		}
 	}
@@ -52,7 +55,7 @@ public class IndicadorVidas implements Renderizable {
 			float alto = vidas[i].getDimensiones()[1];
 
 			vidas[i].sprite
-					.set(new Sprite(new Texture((i < Globales.jugadores.get(0).vida) ? rutaSprites[0] : rutaSprites[1])));
+					.set(new Sprite(new Texture((i < Globales.jugadores.get(numAgente).vida) ? rutaSprites[0] : rutaSprites[1])));
 
 			vidas[i].sprite.setX(x);
 			vidas[i].sprite.setY(y);

@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.wsi.surianodimuro.interfaces.ProcesamientoEntradas;
 import com.wsi.surianodimuro.pantallas.juego.TiempoProcesos;
 import com.wsi.surianodimuro.pantallas.menu.PantallaMenuOpciones;
-import com.wsi.surianodimuro.redes.InfoRed;
 import com.wsi.surianodimuro.utilidades.Boton;
 import com.wsi.surianodimuro.utilidades.ConfigGraficos;
 import com.wsi.surianodimuro.utilidades.Globales;
@@ -60,9 +59,9 @@ public final class EntradasMenuJuegoTerminado implements ProcesamientoEntradas {
 				}
 				TiempoProcesos.resetearTiempos();
 				
-				if (!InfoRed.conexionGlobalEstablecida) {
+//				if (!InfoRed.conexionGlobalEstablecida) {
 					Globales.soundtrack.play();
-				}
+//				}
 
 				if (Globales.cliente.conectadoAlServidor) {
 					Globales.cliente.desconectarseDelServidor();

@@ -305,18 +305,25 @@ public class Cliente extends Thread implements Disposable {
 					}
 				});
 			}
-//
-//			else if (mensajeParametrizado[0].equals(MensajesServidor.ACTUALIZAR_VIDA_AGENTE.getMensaje())) {
-//				Globales.redListener.actualizarVidaAgente();
-//			}
-
+			
+			else if (mensajeParametrizado[0].equals(MensajesServidor.INFECCION_AGENTE.getMensaje())) {
+				final int numAgente = Integer.parseInt(mensajeParametrizado[1]);
+				Gdx.app.postRunnable(new Runnable() {
+					public void run() {
+						Globales.redListener.procesarInfeccionAgente(numAgente);
+						System.out.println("-> Agente infectado");
+					}
+				});
+			}
+			
+			
+			
 			else if (mensajeParametrizado[0].equals(MensajesServidor.ACTUALIZAR_CAJA_MENSAJES.getMensaje())) {
 				final String cajaMensaje = mensajeParametrizado[1];
 				Globales.redListener.actualizarCajaMensaje(cajaMensaje);
 			}
 
 			else if (mensajeParametrizado[0].equals(MensajesServidor.ACTUALIZAR_INDICADOR_GRITO.getMensaje())) {
-//				final String sustoPuntos = mensajeParametrizado[1];
 				final int sustoPuntos = Integer.valueOf(mensajeParametrizado[1]);
 				Globales.redListener.actualizarSustoPuntos(sustoPuntos);
 			}
@@ -330,7 +337,6 @@ public class Cliente extends Thread implements Disposable {
 			}
 
 			else if (mensajeParametrizado[0].equals(MensajesServidor.ACTUALIZAR_INDICADOR_OLEADA.getMensaje())) {
-//				final String numOleada = mensajeParametrizado[1];
 				final int numOleada = Integer.valueOf(mensajeParametrizado[1]);
 				Globales.redListener.actualizarNumOleada(numOleada);
 			}

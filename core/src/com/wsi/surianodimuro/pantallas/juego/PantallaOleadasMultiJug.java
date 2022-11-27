@@ -3,6 +3,7 @@ package com.wsi.surianodimuro.pantallas.juego;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.wsi.surianodimuro.enumeradores.Infectados;
+import com.wsi.surianodimuro.enumeradores.Mensajes;
 import com.wsi.surianodimuro.enumeradores.Monstruos;
 import com.wsi.surianodimuro.enumeradores.Ninios;
 import com.wsi.surianodimuro.pantallas.juego.hud.HudMultiJug;
@@ -68,6 +69,16 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 		super.render(delta);
 
 		if (!InfoRed.conexionGlobalEstablecida) {
+			
+			TiempoProcesos.resetearTiempos();
+			
+			if (Globales.sonidos.musicaDeFondoSonando) {
+				Globales.sonidos.terminarMusicaDeFondo();
+			}
+			else if (Globales.sonidos.musicaEntreRondaSonando) {
+				Globales.sonidos.terminarMusicaEntreRonda();
+			}
+			
 			if (!InfoRed.companieroConectado) {
 				System.out.println("-> Companiero Desconectado!!!!");
 				Globales.juego.setScreen(new PantallaJugadorDesconectado());
@@ -341,29 +352,47 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 	public void aumentarVidaAgente() {
 		jugadorUno.sumarVida();
 		jugadorDos.sumarVida();
-//		actualizarVidaAgente();
 	}
 
-//	@Override
-//	public void actualizarVidaAgente() {
-//		
-//	}
-
+	@Override
+	public void procesarInfeccionAgente(int numAgente) {
+		
+		Globales.jugadores.get(numAgente).restarVida();
+		Globales.jugadores.get(numAgente).controlador.puedeInfectarse = false;
+		
+		if (numAgente == 0) {
+			if (Globales.cliente.numCliente == 1) {
+				hud.getIndicadorVidasJugUno().actualizar();
+			}
+			else if (Globales.cliente.numCliente == 2) {
+				hud.getIndicadorVidasJugDos().actualizar();
+			}
+		}
+		
+		else if (numAgente == 1) {
+			if (Globales.cliente.numCliente == 1) {
+				hud.getIndicadorVidasJugDos().actualizar();
+			}
+			else if (Globales.cliente.numCliente == 2) {
+				hud.getIndicadorVidasJugUno().actualizar();
+			}
+		}
+		
+		Gdx.audio.newSound(Gdx.files.internal("sonidos/oof.mp3")).play();
+	}
 	
 	
-	// TODO: Implementar desde server
+	
 	@Override
 	public void actualizarEscape(String mensaje) {
 		if (mensaje.equals(MensajesServidor.ESCAPE_MONSTRUO.getMensaje())) {
 			datosPartida.escapesRestantesMonstruos -= 1;
-			hud.getIndicadorEscMonstruos().actualizar();
-//			Globales.cajaMensajes.setTexto(Mensajes.ESCAPE_MONSTRUO.getMensaje());  
-			actualizarCajaMensaje(mensaje);
+			hud.getIndicadorEscMonstruos().actualizar(); 
+			actualizarCajaMensaje(Mensajes.ESCAPE_MONSTRUO.getMensaje());
 		} else {
 			datosPartida.escapesRestantesNinios -= 1;
 			hud.getIndicadorEscNinios().actualizar();
-//			Globales.cajaMensajes.setTexto(Mensajes.ESCAPE_NINIO.getMensaje()); 
-			actualizarCajaMensaje(mensaje);
+			actualizarCajaMensaje(Mensajes.ESCAPE_NINIO.getMensaje());
 		}
 	}
 	
@@ -373,8 +402,7 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 	}
 
 	@Override
-	public void actualizarNumOleada(/*String*/int numOleada) {
-//		hud.getIndicadorOleada().newActualizarDatos(numOleada);
+	public void actualizarNumOleada(int numOleada) {
 		Globales.oleadaInfo.numOleada = numOleada;
 		hud.getIndicadorOleada().actualizarDatos();
 	}

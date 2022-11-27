@@ -27,7 +27,7 @@ public abstract class Hud {
 	public Hud(MapObjects elemsHud) {
 
 		MapProperties propsCajaDeMensajes = elemsHud.get("caja_de_mensajes").getProperties();
-		cajaMensajes = new Texto("fuentes/PixelOperator-Bold.ttf", Mensajes.PREVIA_OLEADA.getMensaje(), 35, Color.WHITE);
+		cajaMensajes = new Texto("fuentes/PixelOperator-Bold.ttf", Mensajes.PREVIA_OLEADA.getMensaje(), 40, Color.WHITE);
 		cajaMensajes.setPosicion(Float.parseFloat(propsCajaDeMensajes.get("x").toString()),
 				ConfigGraficos.ALTO_MAPA - Float.parseFloat(propsCajaDeMensajes.get("y").toString())
 						+ Float.parseFloat(propsCajaDeMensajes.get("alto").toString()));

@@ -121,7 +121,6 @@ public class TimerMultiJug extends Thread {
 			cronometro += Gdx.graphics.getDeltaTime();
 			if (!Globales.sonidos.musicaEntreRondaSonando) {
 				Globales.sonidos.sonarMusicaEntreRonda();
-//				System.out.println("-> Musica entre ronda sonando.");
 			}
 			if (cronometro >= TiempoProcesos.tpoEntreOleadas) {
 				Globales.oleadaInfo.numOleada += 1;
@@ -130,7 +129,6 @@ public class TimerMultiJug extends Thread {
 				Globales.oleadaInfo.actualizarIndicador = true;
 				Globales.oleadaInfo.dificultadAumentada = false;
 				Globales.sonidos.terminarMusicaEntreRonda();
-//				System.out.println("-> Musica entre ronda terminada.");
 				cronometro = 0;
 			}
 			Globales.cajaMensajes.setTexto(Mensajes.FIN_OLEADA.getMensaje());

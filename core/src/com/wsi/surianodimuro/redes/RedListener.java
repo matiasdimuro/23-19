@@ -29,7 +29,7 @@ public interface RedListener {
 	void actualizarEscape(String mensaje);
 	
 	void aumentarVidaAgente();
-//	void actualizarVidaAgente();
+	void procesarInfeccionAgente(int numAgente);
 	
 	void actualizarCajaMensaje(String cajaMensaje);
 	
@@ -39,7 +39,7 @@ public interface RedListener {
 	
 	void aumentarVelocidadSpawnRed();
 	void aumentarDuracionOleadaRed();
-	void actualizarNumOleada(/*String*/int numOleada);
+	void actualizarNumOleada(int numOleada);
 	void actualizarSustoPuntos(/*String*/int sustoPuntos);
 
 }

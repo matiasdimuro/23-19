@@ -6,7 +6,7 @@ import com.wsi.surianodimuro.pantallas.juego.hud.elementos.IndicadorVidas;
 import com.wsi.surianodimuro.utilidades.ConfigGraficos;
 
 public final class HudMultiJug extends Hud {
-
+	
 	private IndicadorVidas indicadorVidasJugUno;
 	private IndicadorVidas indicadorVidasJugDos;
 	

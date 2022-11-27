@@ -2,13 +2,13 @@ package com.wsi.surianodimuro.enumeradores;
 
 public enum Mensajes {
 
-	FIN_OLEADA("\nLa oleada ha finalizado.\n\nRecarga fuerzas!"),
-	PREVIA_OLEADA("\nUna nueva oleada esta\n\npor comenzar. Preparate!"),
-	COMIENZO_OLEADA("\nVamos!\n\nDefiende Monstruopilis!"),
+	FIN_OLEADA("\n\nLa oleada ha finalizado.\nRecarga fuerzas!"),
+	PREVIA_OLEADA("\n\nUna nueva oleada esta\npor comenzar. Preparate!"),
+	COMIENZO_OLEADA("\n\nVamos!\n\nDefiende Monstruopilis!"),
 	
-	INFECTADO("\nHas sido infectado!\n\nPierdes una vida"),
-	ESCAPE_MONSTRUO("\nRayos! Se ha\n\nescapado un monstruo!"),
-	ESCAPE_NINIO("\nRayos! Se ha\n\nescapado un niño!");
+	INFECTADO("\n\nHas sido infectado!\nPierdes una vida"),
+	ESCAPE_MONSTRUO("\n\nRayos! Se ha\n\nescapado un monstruo!"),
+	ESCAPE_NINIO("\n\nRayos! Se ha\nescapado un niño!");
 	
 	private String mensaje;
 	
