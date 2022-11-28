@@ -9,12 +9,16 @@ public final class ContenedorIndicadorGrito extends ContenedorGritos {
 	
 	private Texto sustoPuntos;
 	private Texto minPuntosParaUlti;
-
-	public ContenedorIndicadorGrito(float x, float y, float ANCHO, float ALTO, MapProperties indProps) {
+	
+	private int numAgente;
+	
+	public ContenedorIndicadorGrito(float x, float y, float ANCHO, float ALTO, MapProperties indProps, int numAgente) {
 		
 		super("mapa/assets/hud/contenedor_gritos.png", x, y, ANCHO, ALTO, indProps);
 	
-		sustoPuntos = new Texto("fuentes/8-BITWONDER.TTF", "Puntos: " + Integer.toString(Globales.jugadores.get(0).getSustoPuntos()), 14, Color.BLACK);
+		this.numAgente = numAgente;
+		
+		sustoPuntos = new Texto("fuentes/8-BITWONDER.TTF", "Puntos: " + Integer.toString(Globales.jugadores.get(numAgente).getSustoPuntos()), 14, Color.BLACK);
 		sustoPuntos.setPosicion((x + ANCHO / 2) - (sustoPuntos.getDimensiones()[0] / 2), y + 10 + sustoPuntos.getDimensiones()[1]);
 		
 		minPuntosParaUlti = new Texto("fuentes/8-BITWONDER.TTF", "Ultimate: " + Globales.oleadaInfo.GRITOS_ULTIMATE, 14, Color.BLACK);
@@ -28,8 +32,8 @@ public final class ContenedorIndicadorGrito extends ContenedorGritos {
 		sustoPuntos.renderizar();
 		minPuntosParaUlti.renderizar();
 		
-		if (Globales.jugadores.get(0).getSustoPuntos() <= Globales.oleadaInfo.GRITOS_ULTIMATE) {
-			indicador.width = Globales.jugadores.get(0).getSustoPuntos() * valorMaxIndicador / Globales.oleadaInfo.GRITOS_ULTIMATE;
+		if (Globales.jugadores.get(numAgente).getSustoPuntos() <= Globales.oleadaInfo.GRITOS_ULTIMATE) {
+			indicador.width = Globales.jugadores.get(numAgente).getSustoPuntos() * valorMaxIndicador / Globales.oleadaInfo.GRITOS_ULTIMATE;
 		}			
 	}
 	
@@ -42,7 +46,7 @@ public final class ContenedorIndicadorGrito extends ContenedorGritos {
 	
 	@Override
 	public void actualizarDatos() {
-		sustoPuntos.setTexto("Puntos: " + Integer.toString(Globales.jugadores.get(0).getSustoPuntos()));
+		sustoPuntos.setTexto("Puntos: " + Integer.toString(Globales.jugadores.get(numAgente).getSustoPuntos()));
 	}
 	
 	public void newActualizarDatos(String newSustoPuntos) {

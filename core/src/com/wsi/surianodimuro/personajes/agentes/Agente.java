@@ -18,17 +18,10 @@ import com.wsi.surianodimuro.utilidades.Utiles;
 
 public abstract class Agente extends Personaje implements PersonajeJugable {
 
-	/* ====== ATRIBUTOS ====== */
-
-//	private int sustoPuntos;
 	public int sustoPuntos;
-
-	/* ====== OBJETOS EQUIPABLES ====== */
 
 	private Arma[] armamento;
 	public int armaEnUso;
-
-	/* ====== ANIMACIONES & FRAMES ====== */
 
 	private Animation<Sprite> animDisparaDerecha;
 	private Animation<Sprite> animDisparaIzquierda;
@@ -76,18 +69,18 @@ public abstract class Agente extends Personaje implements PersonajeJugable {
 		super.renderizar();
 		if (controlador.caminando) {
 			if (controlador.mirandoIzquierda) {
-				caminarIzquierda();					
+				caminarIzquierda();
 				if (controlador.disparando) {
 					frameActual = animDisparaIzquierda.getKeyFrame(stateTime, true);
 				}
 			} else {
-				caminarDerecha();					
+				caminarDerecha();
 				if (controlador.disparando) {
 					frameActual = animDisparaDerecha.getKeyFrame(stateTime, true);
 				}
 			}
 		}
-		
+
 		else if (controlador.disparando) {
 			frameActual = ((controlador.mirandoIzquierda) ? framesDisparaIzquierda[0] : framesDisparaDerecha[0]);
 		}
@@ -153,16 +146,15 @@ public abstract class Agente extends Personaje implements PersonajeJugable {
 
 	@Override
 	public void dispararUltimate() {
-		
+
 		Ultimate ultimate = new Ultimate();
 
-		float x = (controlador.mirandoIzquierda) ? posicion.x - ultimate.getDimensiones()[0]: posicion.x + getDimensiones()[0];
+		float x = (controlador.mirandoIzquierda) ? posicion.x - ultimate.getDimensiones()[0]
+				: posicion.x + getDimensiones()[0];
 		float y = posicion.y + getDimensiones()[1] / 2 - ultimate.getDimensiones()[1] / 2;
 
 		Globales.proyectilesDisparados.add(new ProyectilDisparado(new Ultimate(),
 				(controlador.mirandoIzquierda) ? DireccionesDisparo.IZQUIERDA : DireccionesDisparo.DERECHA, x, y));
-		
-		System.out.println("- Proyectil diaparado: " + Globales.proyectilesDisparados.size());
 	}
 
 	@Override
@@ -172,12 +164,12 @@ public abstract class Agente extends Personaje implements PersonajeJugable {
 			sustoPuntos = 0;
 		}
 	}
-	
+
 	@Override
 	public void sumarVida() {
 		vida = (vida < 3) ? vida += 1 : 3;
 	}
-	
+
 	@Override
 	public void incrementarVelocidad() {
 		super.incrementarVelocidad();

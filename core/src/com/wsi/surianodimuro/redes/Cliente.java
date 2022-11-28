@@ -308,7 +308,6 @@ public class Cliente extends Thread implements Disposable {
 				final int numOleada = Integer.valueOf(mensajeParametrizado[1]);
 				Globales.redListener.actualizarNumOleada(numOleada);
 			}
-
 		}
 	}
 

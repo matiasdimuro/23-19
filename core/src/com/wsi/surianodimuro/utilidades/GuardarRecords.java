@@ -17,7 +17,7 @@ public class GuardarRecords {
 			/*Guardo un archivo de records*/
 			ObjectOutputStream guardar = new ObjectOutputStream( 
 					new FileOutputStream("records.sav"));
-			System.out.println("Guardado realizado...");
+//			System.out.println("Guardado realizado...");
 			guardar.writeObject(rcrd);
 			guardar.close();
 		} catch (Exception e) {
@@ -40,7 +40,7 @@ public class GuardarRecords {
 			ObjectInputStream cargar = new ObjectInputStream(
 					new FileInputStream("records.sav"));
 			rcrd = (Records) cargar.readObject();
-			System.out.println("Carga realizada...");
+//			System.out.println("Carga realizada...");
 			cargar.close();
 		} catch (Exception e) {
 			e.printStackTrace();

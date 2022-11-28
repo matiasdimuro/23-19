@@ -442,8 +442,8 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 	@Override
 	public void actualizarSustoPuntos(int sustoPuntos) {
 		datosPartida.puntajeTotal += sustoPuntos;
-		Globales.jugadores.get(0).sustoPuntos = sustoPuntos;
-		Globales.jugadores.get(1).sustoPuntos = sustoPuntos;
+		jugadorUno.sustoPuntos = sustoPuntos;
+		jugadorDos.sustoPuntos = sustoPuntos;
 		hud.getIndicadorGrito().actualizarDatos();
 	}
 }

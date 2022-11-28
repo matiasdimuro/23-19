@@ -9,7 +9,9 @@ import com.wsi.surianodimuro.pantallas.juego.hud.elementos.ContenedorIndicadorOl
 import com.wsi.surianodimuro.pantallas.juego.hud.elementos.IndicadorEscapesMonstruos;
 import com.wsi.surianodimuro.pantallas.juego.hud.elementos.IndicadorEscapesNinios;
 import com.wsi.surianodimuro.pantallas.juego.hud.elementos.InventarioArmamento;
+import com.wsi.surianodimuro.redes.InfoRed;
 import com.wsi.surianodimuro.utilidades.ConfigGraficos;
+import com.wsi.surianodimuro.utilidades.Globales;
 import com.wsi.surianodimuro.utilidades.Texto;
 
 public abstract class Hud {
@@ -27,7 +29,8 @@ public abstract class Hud {
 	public Hud(MapObjects elemsHud) {
 
 		MapProperties propsCajaDeMensajes = elemsHud.get("caja_de_mensajes").getProperties();
-		cajaMensajes = new Texto("fuentes/PixelOperator-Bold.ttf", Mensajes.PREVIA_OLEADA.getMensaje(), 40, Color.WHITE);
+		cajaMensajes = new Texto("fuentes/PixelOperator-Bold.ttf", Mensajes.PREVIA_OLEADA.getMensaje(), 40,
+				Color.WHITE);
 		cajaMensajes.setPosicion(Float.parseFloat(propsCajaDeMensajes.get("x").toString()),
 				ConfigGraficos.ALTO_MAPA - Float.parseFloat(propsCajaDeMensajes.get("y").toString())
 						+ Float.parseFloat(propsCajaDeMensajes.get("alto").toString()));
@@ -50,7 +53,8 @@ public abstract class Hud {
 				ConfigGraficos.ALTO_MAPA - Float.parseFloat(propsIndGritos.get("y").toString()),
 				Float.parseFloat(propsIndGritos.get("ancho").toString()),
 				Float.parseFloat(propsIndGritos.get("alto").toString()),
-				elemsHud.get("indicador_contenedor_gritos_sm").getProperties());
+				elemsHud.get("indicador_contenedor_gritos_sm").getProperties(),
+				(InfoRed.conexionGlobalEstablecida) ? Globales.cliente.numCliente - 1 : 0);
 
 		MapProperties propsIndEscMons = elemsHud.get("escape_mons_1").getProperties();
 		indicadorEscMonstruos = new IndicadorEscapesMonstruos(Float.parseFloat(propsIndEscMons.get("x").toString()),
@@ -88,7 +92,7 @@ public abstract class Hud {
 	public Texto getCajaMensajes() {
 		return cajaMensajes;
 	}
-	
+
 	public InventarioArmamento getInventarioArmamento() {
 		return inventarioArmamento;
 	}
