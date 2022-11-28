@@ -3,13 +3,15 @@ package com.wsi.surianodimuro.pantallas.juego.entradas;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.wsi.surianodimuro.interfaces.ProcesamientoEntradas;
-import com.wsi.surianodimuro.pantallas.juego.TiempoProcesos;
+import com.wsi.surianodimuro.pantallas.juego.TiempoProcesosMultiJug;
+import com.wsi.surianodimuro.pantallas.juego.TiempoProcesosUnJug;
 import com.wsi.surianodimuro.pantallas.menu.PantallaMenuOpciones;
+import com.wsi.surianodimuro.redes.InfoRed;
 import com.wsi.surianodimuro.utilidades.Boton;
 import com.wsi.surianodimuro.utilidades.ConfigGraficos;
 import com.wsi.surianodimuro.utilidades.Globales;
-import com.wsi.surianodimuro.utilidades.Helpers;
 import com.wsi.surianodimuro.utilidades.GuardarRecords;
+import com.wsi.surianodimuro.utilidades.Helpers;
 
 public final class EntradasMenuJuegoTerminado implements ProcesamientoEntradas {
 
@@ -57,11 +59,13 @@ public final class EntradasMenuJuegoTerminado implements ProcesamientoEntradas {
 				if (Globales.sonidos.alarmaSonando) {
 					Globales.sonidos.pausarMusicaAlarma();
 				}
-				TiempoProcesos.resetearTiempos();
+				if (!InfoRed.conexionGlobalEstablecida) {
+					TiempoProcesosUnJug.resetearTiempos();
+				} else {
+					TiempoProcesosMultiJug.resetearTiempos();
+				}
 				
-//				if (!InfoRed.conexionGlobalEstablecida) {
-					Globales.soundtrack.play();
-//				}
+				Globales.soundtrack.play();
 
 				if (Globales.cliente.conectadoAlServidor) {
 					Globales.cliente.desconectarseDelServidor();

@@ -21,6 +21,7 @@ import com.wsi.surianodimuro.pantallas.juego.menus.MenuSuspension;
 import com.wsi.surianodimuro.personajes.Infectado;
 import com.wsi.surianodimuro.personajes.agentes.Agente;
 import com.wsi.surianodimuro.personajes.agentes.armamento.proyectiles.ProyectilDisparado;
+import com.wsi.surianodimuro.redes.InfoRed;
 import com.wsi.surianodimuro.utilidades.ConfigGraficos;
 import com.wsi.surianodimuro.utilidades.Globales;
 import com.wsi.surianodimuro.utilidades.Utiles;
@@ -186,13 +187,26 @@ public abstract class PantallaOleadas extends Pantalla implements MejorarEstadis
 
 	@Override
 	public void aumentarDuracionOleada() {
-		TiempoProcesos.duracionOleada += 10;
+		if (!InfoRed.conexionGlobalEstablecida) {
+			TiempoProcesosUnJug.duracionOleada += 10;
+		}
+		else {
+			TiempoProcesosMultiJug.duracionOleada += 10;
+		}
 	}
 
 	@Override
 	public void aumentarVelocidadSpawn() {
-		if (TiempoProcesos.tpoRetardoSpawns >= 1) {
-			TiempoProcesos.tpoRetardoSpawns -= .5f;
+		
+		if (!InfoRed.conexionGlobalEstablecida) {
+			if (TiempoProcesosUnJug.tpoRetardoSpawns >= .5f) {
+				TiempoProcesosUnJug.tpoRetardoSpawns -= .5f;
+			}
+		}
+		else {
+			if (TiempoProcesosMultiJug.tpoRetardoSpawns >= .5f) {
+				TiempoProcesosMultiJug.tpoRetardoSpawns -= .5f;
+			}
 		}
 	}
 

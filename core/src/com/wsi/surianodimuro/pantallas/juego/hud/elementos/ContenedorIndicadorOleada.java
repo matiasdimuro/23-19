@@ -2,7 +2,9 @@ package com.wsi.surianodimuro.pantallas.juego.hud.elementos;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.MapProperties;
-import com.wsi.surianodimuro.pantallas.juego.TiempoProcesos;
+import com.wsi.surianodimuro.pantallas.juego.TiempoProcesosMultiJug;
+import com.wsi.surianodimuro.pantallas.juego.TiempoProcesosUnJug;
+import com.wsi.surianodimuro.redes.InfoRed;
 import com.wsi.surianodimuro.utilidades.Globales;
 import com.wsi.surianodimuro.utilidades.Texto;
 
@@ -26,8 +28,16 @@ public final class ContenedorIndicadorOleada extends ContenedorGritos{
 		super.renderizar();
 		numOleada.renderizar();
 		
-		if (Globales.oleadaInfo.tiempoTranscurrido <= TiempoProcesos.duracionOleada) {
-			indicador.width = Globales.oleadaInfo.tiempoTranscurrido * valorMaxIndicador / TiempoProcesos.duracionOleada;			
+		if (!InfoRed.conexionGlobalEstablecida) {
+			if (Globales.oleadaInfo.tiempoTranscurrido <= TiempoProcesosUnJug.duracionOleada) {
+				indicador.width = Globales.oleadaInfo.tiempoTranscurrido * valorMaxIndicador / TiempoProcesosUnJug.duracionOleada;			
+			}
+		}
+		
+		else {
+			if (Globales.oleadaInfo.tiempoTranscurrido <= TiempoProcesosMultiJug.duracionOleada) {
+				indicador.width = Globales.oleadaInfo.tiempoTranscurrido * valorMaxIndicador / TiempoProcesosMultiJug.duracionOleada;			
+			}
 		}
 	}
 	

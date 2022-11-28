@@ -46,6 +46,7 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 		}
 
 		Globales.redListener = this;
+		
 	}
 
 	@Override
@@ -70,7 +71,7 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 
 		if (!InfoRed.conexionGlobalEstablecida) {
 			
-			TiempoProcesos.resetearTiempos();
+			TiempoProcesosMultiJug.resetearTiempos();
 			
 			if (Globales.sonidos.musicaDeFondoSonando) {
 				Globales.sonidos.terminarMusicaDeFondo();

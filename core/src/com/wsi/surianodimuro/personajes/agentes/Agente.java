@@ -177,6 +177,12 @@ public abstract class Agente extends Personaje implements PersonajeJugable {
 	public void sumarVida() {
 		vida = (vida < 3) ? vida += 1 : 3;
 	}
+	
+	@Override
+	public void incrementarVelocidad() {
+		super.incrementarVelocidad();
+		velocidadX *= 1.1f;
+	}
 
 	public Arma[] getArmamento() {
 		return armamento;

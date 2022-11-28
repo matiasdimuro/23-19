@@ -2,7 +2,7 @@ package com.wsi.surianodimuro.utilidades.timers;
 
 import com.badlogic.gdx.Gdx;
 import com.wsi.surianodimuro.enumeradores.Mensajes;
-import com.wsi.surianodimuro.pantallas.juego.TiempoProcesos;
+import com.wsi.surianodimuro.pantallas.juego.TiempoProcesosUnJug;
 import com.wsi.surianodimuro.utilidades.Globales;
 
 public abstract class Timer extends Thread {
@@ -42,7 +42,7 @@ public abstract class Timer extends Thread {
 			if (!Globales.sonidos.musicaEntreRondaSonando) {
 				Globales.sonidos.sonarMusicaEntreRonda();
 			}
-			if (cronometro >= TiempoProcesos.tpoEntreOleadas) {
+			if (cronometro >= TiempoProcesosUnJug.tpoEntreOleadas) {
 				Globales.oleadaInfo.numOleada += 1;
 				Globales.oleadaInfo.mejoraEfectuada = false;
 				Globales.oleadaInfo.oleadaComenzada = false;
@@ -65,14 +65,14 @@ public abstract class Timer extends Thread {
 			Globales.oleadaInfo.tiempoTranscurrido = duracionOleada;
 			
 			/* (A) Spawn de Entes */
-			if ((cronometro >= TiempoProcesos.tpoRetardoSpawns) && (duracionOleada < TiempoProcesos.duracionOleada)) {
+			if ((cronometro >= TiempoProcesosUnJug.tpoRetardoSpawns) && (duracionOleada < TiempoProcesosUnJug.duracionOleada)) {
 				cronometro = 0;
 				Globales.actividadInfectadosListener.spawnearInfectado();
 				Globales.cajaMensajes.setTexto(Mensajes.COMIENZO_OLEADA.getMensaje());
 			}
 			
 			/* (B) Oleada Terminada */
-			if ((duracionOleada >= TiempoProcesos.duracionOleada) && (Globales.oleadaInfo.libreDeEntes)) {
+			if ((duracionOleada >= TiempoProcesosUnJug.duracionOleada) && (Globales.oleadaInfo.libreDeEntes)) {
 				Globales.oleadaInfo.oleadaEnCurso = false;
 				duracionOleada = 0;
 				cronometro = 0;
@@ -85,7 +85,7 @@ public abstract class Timer extends Thread {
 		
 		if (!Globales.oleadaInfo.oleadaComenzada) {
 			cronometro += Gdx.graphics.getDeltaTime();
-			if (cronometro >= TiempoProcesos.tpoRetardoInicio) {
+			if (cronometro >= TiempoProcesosUnJug.tpoRetardoInicio) {
 				Globales.oleadaInfo.oleadaComenzada = true;
 				Globales.oleadaInfo.oleadaEnCurso = true;
 				cronometro = 0;

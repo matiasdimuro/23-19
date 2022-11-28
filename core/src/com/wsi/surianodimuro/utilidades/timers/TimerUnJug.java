@@ -1,7 +1,7 @@
 package com.wsi.surianodimuro.utilidades.timers;
 
 import com.badlogic.gdx.Gdx;
-import com.wsi.surianodimuro.pantallas.juego.TiempoProcesos;
+import com.wsi.surianodimuro.pantallas.juego.TiempoProcesosUnJug;
 import com.wsi.surianodimuro.personajes.agentes.Agente;
 import com.wsi.surianodimuro.utilidades.Globales;
 
@@ -43,7 +43,7 @@ public class TimerUnJug extends Timer {
 			
 			if (!jugadorUno.controlador.puedeInfectarse) {
 				tiempoMuertoInfeccion += Gdx.graphics.getDeltaTime();
-				if (tiempoMuertoInfeccion >= TiempoProcesos.tpoRetardoInfecccion) {
+				if (tiempoMuertoInfeccion >= TiempoProcesosUnJug.tpoRetardoInfecccion) {
 					jugadorUno.controlador.puedeInfectarse = true;
 					tiempoMuertoInfeccion = 0;
 				}

@@ -2,7 +2,7 @@ package com.wsi.surianodimuro.utilidades.timers;
 
 import com.badlogic.gdx.Gdx;
 import com.wsi.surianodimuro.enumeradores.Mensajes;
-import com.wsi.surianodimuro.pantallas.juego.TiempoProcesos;
+import com.wsi.surianodimuro.pantallas.juego.TiempoProcesosMultiJug;
 import com.wsi.surianodimuro.personajes.agentes.Agente;
 import com.wsi.surianodimuro.utilidades.Globales;
 
@@ -81,7 +81,7 @@ public class TimerMultiJug extends Thread {
 
 			if (!jugadorUno.controlador.puedeInfectarse) {
 				tiempoMuertoInfeccionJugUno += Gdx.graphics.getDeltaTime();
-				if (tiempoMuertoInfeccionJugUno >= TiempoProcesos.tpoRetardoInfecccion) {
+				if (tiempoMuertoInfeccionJugUno >= TiempoProcesosMultiJug.tpoRetardoInfecccion) {
 					jugadorUno.controlador.puedeInfectarse = true;
 					tiempoMuertoInfeccionJugUno = 0;
 				}
@@ -89,7 +89,7 @@ public class TimerMultiJug extends Thread {
 
 			if (!jugadorDos.controlador.puedeInfectarse) {
 				tiempoMuertoInfeccionJugDos += Gdx.graphics.getDeltaTime();
-				if (tiempoMuertoInfeccionJugDos >= TiempoProcesos.tpoRetardoInfecccion) {
+				if (tiempoMuertoInfeccionJugDos >= TiempoProcesosMultiJug.tpoRetardoInfecccion) {
 					jugadorDos.controlador.puedeInfectarse = true;
 					tiempoMuertoInfeccionJugDos = 0;
 				}
@@ -122,7 +122,7 @@ public class TimerMultiJug extends Thread {
 			if (!Globales.sonidos.musicaEntreRondaSonando) {
 				Globales.sonidos.sonarMusicaEntreRonda();
 			}
-			if (cronometro >= TiempoProcesos.tpoEntreOleadas) {
+			if (cronometro >= TiempoProcesosMultiJug.tpoEntreOleadas) {
 				Globales.oleadaInfo.numOleada += 1;
 				Globales.oleadaInfo.mejoraEfectuada = false;
 				Globales.oleadaInfo.oleadaComenzada = false;
@@ -147,13 +147,13 @@ public class TimerMultiJug extends Thread {
 			Globales.oleadaInfo.tiempoTranscurrido = duracionOleada;
 
 			/* (A) Spawn de Entes */
-			if ((cronometro >= TiempoProcesos.tpoRetardoSpawns) && (duracionOleada < TiempoProcesos.duracionOleada)) {
+			if ((cronometro >= TiempoProcesosMultiJug.tpoRetardoSpawns) && (duracionOleada < TiempoProcesosMultiJug.duracionOleada)) {
 				cronometro = 0;
 				Globales.cajaMensajes.setTexto(Mensajes.COMIENZO_OLEADA.getMensaje());
 			}
 
 			/* (B) Oleada Terminada */
-			if ((duracionOleada >= TiempoProcesos.duracionOleada) && (Globales.oleadaInfo.libreDeEntes)) {
+			if ((duracionOleada >= TiempoProcesosMultiJug.duracionOleada) && (Globales.oleadaInfo.libreDeEntes)) {
 				Globales.oleadaInfo.oleadaEnCurso = false;
 				duracionOleada = 0;
 				cronometro = 0;
@@ -168,7 +168,7 @@ public class TimerMultiJug extends Thread {
 		if (!Globales.oleadaInfo.oleadaComenzada) {
 //			System.out.println("--> Procesando retardo Inicio Oleadas");
 			cronometro += Gdx.graphics.getDeltaTime();
-			if (cronometro >= TiempoProcesos.tpoRetardoInicio) {
+			if (cronometro >= TiempoProcesosMultiJug.tpoRetardoInicio) {
 				Globales.oleadaInfo.oleadaComenzada = true;
 				Globales.oleadaInfo.oleadaEnCurso = true;
 				cronometro = 0;
