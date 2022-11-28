@@ -33,16 +33,16 @@ public final class PantallaOleadasUnJug extends PantallaOleadas implements Proce
 
 	private Agente jugadorUno;
 	private HudUnJug hud;
-	
+
 	private TimerUnJug timer;
-	
+
 	public PantallaOleadasUnJug() {
-		
+
 		super();
-		
+
 		jugadorUno = new AgenteUno();
 		Globales.jugadores.add(jugadorUno);
-		
+
 		Globales.mejorarEstadisticasListener = this;
 		Globales.aumentarDificultadListener = this;
 		Globales.actividadInfectadosListener = this;
@@ -51,33 +51,34 @@ public final class PantallaOleadasUnJug extends PantallaOleadas implements Proce
 
 	@Override
 	public void show() {
-		
+
 		super.show();
-		
-		jugadorUno.setPosicion(ConfigGraficos.ANCHO_MAPA - jugadorUno.getDimensiones()[0] - 10, mapa.getTienda().getPosicion().y);
+
+		jugadorUno.setPosicion(ConfigGraficos.ANCHO_MAPA - jugadorUno.getDimensiones()[0] - 10,
+				mapa.getTienda().getPosicion().y);
 		timer = new TimerUnJug();
 		hud = new HudUnJug(mapa.getElemsHud());
 
 		Globales.cajaMensajes = hud.getCajaMensajes();
 	}
-	
+
 	@Override
 	public void render(float delta) {
-		
+
 		super.render(delta);
-		
+
 		if (!datosPartida.terminada) {
-			
+
 			timer.run();
-			
+
 			Utiles.batch.begin();
 			hud.renderizar();
 			jugadorUno.renderizar();
 			Utiles.batch.end();
-			
+
 			mostrarIndicadores();
-		} 
-		
+		}
+
 		else {
 			timer.timerMusicaFinal += Gdx.graphics.getDeltaTime();
 			if (timer.timerMusicaFinal > 5) {
@@ -89,9 +90,9 @@ public final class PantallaOleadasUnJug extends PantallaOleadas implements Proce
 				}
 			}
 		}
-		
+
 		if (!datosPartida.suspendida) {
-			
+
 			for (Infectado infectado : infectados) {
 				if (infectado.controlador.mirandoIzquierda) {
 					infectado.moverseIzquierda();
@@ -101,7 +102,7 @@ public final class PantallaOleadasUnJug extends PantallaOleadas implements Proce
 					infectado.caminarDerecha();
 				}
 			}
-			
+
 			if ((oleadaInfo.oleadaEnCurso) && (infectados.size() > 0)) {
 				if (jugadorUno.controlador.puedeInfectarse) {
 					detectarInfecciones();
@@ -132,7 +133,7 @@ public final class PantallaOleadasUnJug extends PantallaOleadas implements Proce
 			if (!oleadaInfo.dificultadAumentada) {
 				aumentarDificultad();
 			}
-			
+
 			if (!oleadaInfo.mejoraEfectuada) {
 				chequearAumentoEstadisticas();
 			}
@@ -142,13 +143,13 @@ public final class PantallaOleadasUnJug extends PantallaOleadas implements Proce
 				datosPartida.terminada = true;
 			}
 		}
-		
+
 		else {
 			Utiles.batch.begin();
 			menuDeSuspension.renderizar();
 			Utiles.batch.end();
 		}
-		
+
 		if (!((datosPartida.escapesRestantesMonstruos > 0) && (datosPartida.escapesRestantesNinios > 0)
 				&& (jugadorUno.vida > 0))) {
 			datosPartida.terminada = true;
@@ -161,21 +162,21 @@ public final class PantallaOleadasUnJug extends PantallaOleadas implements Proce
 		hud.liberarMemoria();
 		jugadorUno.liberarMemoria();
 	}
-	
+
 	@Override
 	public void procesarEntrada() {
-		
+
 		super.procesarEntrada();
-		
+
 		if (!datosPartida.terminada) {
-			
+
 			if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 				datosPartida.suspendida = !datosPartida.suspendida;
 				timer.alternarPausa();
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean chequearColisiones() {
 
@@ -374,10 +375,17 @@ public final class PantallaOleadasUnJug extends PantallaOleadas implements Proce
 				if (infectado.getRectangulo().overlaps(proyectilDisparado.proyectil.getRectangulo())) {
 
 					if (infectado.getDebilidad() == proyectilDisparado.proyectil.getTipo()) {
-						Gdx.audio.newSound(Gdx.files.internal(proyectilDisparado.proyectil.getTipo().getRutaSonidoColision())).play();
+						Gdx.audio
+								.newSound(Gdx.files
+										.internal(proyectilDisparado.proyectil.getTipo().getRutaSonidoColision()))
+								.play();
 						proyectilesDisparadosImpactados.add(proyectilDisparado);
 						if (!infectado.controlador.desinfectado) {
-							infectado.restarVida();;
+							infectado.restarVida();
+							Gdx.audio
+									.newSound(Gdx.files
+											.internal(proyectilDisparado.proyectil.getTipo().getRutaSonidoColision()))
+									.play();
 						}
 						impactado = true;
 					} else if ((proyectilDisparado.proyectil.getTipo() == Proyectiles.ULTIMATE)
@@ -405,16 +413,18 @@ public final class PantallaOleadasUnJug extends PantallaOleadas implements Proce
 					datosPartida.escapesRestantesMonstruos -= 1;
 					hud.getIndicadorEscMonstruos().actualizar();
 					Globales.cajaMensajes.setTexto(Mensajes.ESCAPE_MONSTRUO.getMensaje());
+					sonidos.sonarEscapeMonstruo();
 				} else if (infectado.getDebilidad() == Proyectiles.PROYECTIL_BOO2000) {
 					sonidos.sonarEscapeNinio();
 					datosPartida.escapesRestantesNinios -= 1;
 					hud.getIndicadorEscNinios().actualizar();
 					Globales.cajaMensajes.setTexto(Mensajes.ESCAPE_NINIO.getMensaje());
+					sonidos.sonarEscapeNinio();
 				}
 			}
 		}
 	}
-	
+
 	@Override
 	public void detectarInfecciones() {
 
@@ -435,9 +445,9 @@ public final class PantallaOleadasUnJug extends PantallaOleadas implements Proce
 			}
 		} while ((!infeccion) && (++i < infectados.size()));
 	}
-	
+
 	private void mostrarIndicadores() {
-		
+
 		for (Infectado infectado : infectados) {
 			infectado.getIndicadorVida().renderizar();
 		}
@@ -471,7 +481,7 @@ public final class PantallaOleadasUnJug extends PantallaOleadas implements Proce
 		jugadorUno.getArmamento()[0].aumentarVelocidadDisparo();
 		jugadorUno.getArmamento()[1].aumentarVelocidadDisparo();
 	}
-	
+
 	@Override
 	public void spawnearInfectado() {
 
@@ -491,7 +501,7 @@ public final class PantallaOleadasUnJug extends PantallaOleadas implements Proce
 		infectado.setPosicion(x, y);
 		infectados.add(infectado);
 	}
-	
+
 	@Override
 	public void chequearInfectadosEnMapa() {
 

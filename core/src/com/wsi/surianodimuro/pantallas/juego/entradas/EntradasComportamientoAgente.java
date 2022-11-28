@@ -2,6 +2,7 @@ package com.wsi.surianodimuro.pantallas.juego.entradas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.wsi.surianodimuro.enumeradores.Armamentos;
 import com.wsi.surianodimuro.interfaces.ProcesamientoEntradas;
 import com.wsi.surianodimuro.objetos.Ascensor;
 import com.wsi.surianodimuro.redes.InfoRed;
@@ -115,25 +116,32 @@ public final class EntradasComportamientoAgente implements ProcesamientoEntradas
 		if (Globales.jugadores.get(numAgente).controlador.puedeDisparar) {
 
 			if (Gdx.input.isKeyPressed(Keys.C)) {
-				Globales.jugadores.get(numAgente).controlador.disparando = true;
-//				Globales.jugadores.get(numAgente).dispararProyectil();
-				Globales.jugadores.get(numAgente).controlador.puedeDisparar = false;
-			
 				if (InfoRed.conexionGlobalEstablecida) {
 					Globales.cliente.enviarMensaje(MensajesCliente.DISPARAR_PROYECTIL.getMensaje());
+				} else {					
+					Globales.jugadores.get(numAgente).dispararProyectil();
+					if (Globales.jugadores.get(numAgente).getArmamento()[Globales.jugadores.get(numAgente).armaEnUso].getTipo() == Armamentos.DESINTOX) {
+						Gdx.audio.newSound(Gdx.files.internal("sonidos/bloop.mp3")).play();
+					}
+					else {
+						Gdx.audio.newSound(Gdx.files.internal("sonidos/waterDrop.mp3")).play();
+					}
 				}
+				Globales.jugadores.get(numAgente).controlador.disparando = true;
+				Globales.jugadores.get(numAgente).controlador.puedeDisparar = false;
+			
 			}
 
 			else if ((Gdx.input.isKeyJustPressed(Keys.V))
 					&& (Globales.jugadores.get(numAgente).getSustoPuntos() >= Globales.oleadaInfo.GRITOS_ULTIMATE)) {
-				Globales.jugadores.get(numAgente).controlador.disparando = true;
-//				Globales.jugadores.get(numAgente).dispararUltimate();
-				Globales.jugadores.get(numAgente).actualizarSustoPuntos(-Globales.oleadaInfo.GRITOS_ULTIMATE);
-				Globales.jugadores.get(numAgente).controlador.puedeDisparar = false;
-
 				if (InfoRed.conexionGlobalEstablecida) {
 					Globales.cliente.enviarMensaje(MensajesCliente.DISPARAR_ULTIMATE.getMensaje());
+				} else {
+					Globales.jugadores.get(numAgente).dispararUltimate();
 				}
+				Globales.jugadores.get(numAgente).controlador.disparando = true;
+				Globales.jugadores.get(numAgente).actualizarSustoPuntos(-Globales.oleadaInfo.GRITOS_ULTIMATE);
+				Globales.jugadores.get(numAgente).controlador.puedeDisparar = false;
 			}
 			
 			else {

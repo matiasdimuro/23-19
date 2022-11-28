@@ -24,7 +24,7 @@ public class Cliente extends Thread implements Disposable {
 	public boolean conectadoAlServidor = false;
 
 	public Cliente() {
-		System.out.println("Cliente creado.");
+//		System.out.println("Cliente creado.");
 		try {
 			socket = new DatagramSocket();
 		} catch (SocketException e) {
@@ -39,7 +39,7 @@ public class Cliente extends Thread implements Disposable {
 		offline = false;
 
 		while (!fin) {
-//			System.out.println(".");	// NO BORRAR ESTA LINEA - DESCOMENTAR ESTA LINEA
+			System.out.println(".");	// NO BORRAR ESTA LINEA
 			if (!offline) {
 				byte[] datos = new byte[1024];
 				DatagramPacket datagrama = new DatagramPacket(datos, datos.length);
@@ -65,12 +65,12 @@ public class Cliente extends Thread implements Disposable {
 	}
 
 	public void conectarseAlServidor() {
-		System.out.println("-> Probando conexion al servidor ...");
+//		System.out.println("-> Probando conexion al servidor ...");
 		enviarMensaje(MensajesCliente.SOLICITAR_CONEXION.getMensaje());
 	}
 
 	public void desconectarseDelServidor() {
-		System.out.println("-> Desconectandose del servidor ...");
+//		System.out.println("-> Desconectandose del servidor ...");
 		enviarMensaje(MensajesCliente.DESCONECTARSE_DEL_SERVIDOR.getMensaje());
 		reiniciarCliente();
 	}
@@ -84,7 +84,7 @@ public class Cliente extends Thread implements Disposable {
 
 		if (mensajeParametrizado[0].equals(MensajesServidor.EMPEZAR_JUEGO.getMensaje())) {
 			
-			System.out.println("*** Ha comenzado el juego! ***");
+//			System.out.println("*** Ha comenzado el juego ***");
 			InfoRed.conexionGlobalEstablecida = true;
 			InfoRed.companieroConectado = true;
 			
@@ -98,13 +98,13 @@ public class Cliente extends Thread implements Disposable {
 		}
 
 		else if (mensajeParametrizado[0].equals(MensajesServidor.TERMINAR_JUEGO.getMensaje())) {
-			System.out.println("*** Juego terminado! ***");
+//			System.out.println("*** Juego terminado ***");
 			Globales.datosPartida.terminada = true;
 		}
 
 		else if (mensajeParametrizado[0].equals(MensajesServidor.CERRAR_SERVIDOR.getMensaje())) {
 			
-			System.out.println("=> Oops, se ha cerrado el servidor");
+//			System.out.println("- Oops, se ha cerrado el servidor");
 			reiniciarCliente();
 			Servidor.cerrar();
 			offline = true;
@@ -119,7 +119,7 @@ public class Cliente extends Thread implements Disposable {
 
 		else if (mensajeParametrizado[0].equals(MensajesServidor.SOLICITUD_ACEPTADA.getMensaje())) {
 			
-			System.out.println("-> El cliente se ha conectado al servidor.");
+//			System.out.println("-> El cliente se ha conectado al servidor.");
 			conectadoAlServidor = true;
 			
 			Servidor.iniciar();
@@ -131,18 +131,18 @@ public class Cliente extends Thread implements Disposable {
 			Gdx.app.postRunnable(new Runnable() {
 				@Override
 				public void run() {
-					System.out.println("- Esperando Jugador ...");
+//					System.out.println("- Esperando Jugador ...");
 					Globales.juego.setScreen(new PantallaEsperandoJugador());
 				}
 			});
 		}
 		
 		else if (mensajeParametrizado[0].equals(MensajesServidor.SOLICITUD_RECHAZADA.getMensaje())) {
-			System.out.println("-> El servidor se encuentra lleno.");
+//			System.out.println("- El servidor se encuentra lleno.");
 		}
 
 		else if (mensajeParametrizado[0].equals(MensajesServidor.DESCONECTAR_CLIENTE.getMensaje())) {
-			System.out.println("=> Has sido desconectado");
+//			System.out.println("-> Has sido desconectado");
 			InfoRed.conexionGlobalEstablecida = false;
 			InfoRed.companieroConectado = false;
 			reiniciarCliente();
@@ -283,29 +283,6 @@ public class Cliente extends Thread implements Disposable {
 				Globales.redListener.eliminarProyectil(indiceProyectil);
 			}
 			
-			
-			
-			
-			else if (mensajeParametrizado[0].equals(MensajesServidor.AUMENTAR_RAPIDEZ.getMensaje())) {
-				Globales.redListener.actualizarRapidez();
-			}
-
-			else if (mensajeParametrizado[0].equals(MensajesServidor.AUMENTAR_ALCANCE.getMensaje())) {
-				Globales.redListener.actualizarAlcance();
-			}
-
-			else if (mensajeParametrizado[0].equals(MensajesServidor.AUMENTAR_DISPARO.getMensaje())) {
-				Globales.redListener.actualizarDisparo();
-			}
-
-			else if (mensajeParametrizado[0].equals(MensajesServidor.AUMENTAR_VIDA_AGENTE.getMensaje())) {
-				Gdx.app.postRunnable(new Runnable() {
-					public void run() {
-						Globales.redListener.aumentarVidaAgente();
-					}
-				});
-			}
-			
 			else if (mensajeParametrizado[0].equals(MensajesServidor.INFECCION_AGENTE.getMensaje())) {
 				final int numAgente = Integer.parseInt(mensajeParametrizado[1]);
 				Gdx.app.postRunnable(new Runnable() {
@@ -325,14 +302,6 @@ public class Cliente extends Thread implements Disposable {
 			else if (mensajeParametrizado[0].equals(MensajesServidor.ACTUALIZAR_INDICADOR_GRITO.getMensaje())) {
 				final int sustoPuntos = Integer.valueOf(mensajeParametrizado[1]);
 				Globales.redListener.actualizarSustoPuntos(sustoPuntos);
-			}
-
-			else if (mensajeParametrizado[0].equals(MensajesServidor.AUMENTAR_VELOCIDAD_SPAWN.getMensaje())) {
-				Globales.redListener.aumentarVelocidadSpawnRed();
-			}
-
-			else if (mensajeParametrizado[0].equals(MensajesServidor.AUMENTAR_DURACION_OLEADA.getMensaje())) {
-				Globales.redListener.aumentarDuracionOleadaRed();
 			}
 
 			else if (mensajeParametrizado[0].equals(MensajesServidor.ACTUALIZAR_INDICADOR_OLEADA.getMensaje())) {
@@ -355,7 +324,7 @@ public class Cliente extends Thread implements Disposable {
 		this.interrupt();
 		fin = true;
 		if (conectadoAlServidor) {
-			System.out.println("-> Cerrando juego y cliente!");
+//			System.out.println("-> Cerrando cliente!");
 			desconectarseDelServidor();
 		}
 		System.exit(0);

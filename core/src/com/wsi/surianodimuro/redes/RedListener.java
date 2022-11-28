@@ -28,17 +28,10 @@ public interface RedListener {
 	
 	void actualizarEscape(String mensaje);
 	
-	void aumentarVidaAgente();
 	void procesarInfeccionAgente(int numAgente);
 	
 	void actualizarCajaMensaje(String cajaMensaje);
 	
-	void actualizarDisparo();
-	void actualizarAlcance();
-	void actualizarRapidez();
-	
-	void aumentarVelocidadSpawnRed();
-	void aumentarDuracionOleadaRed();
 	void actualizarNumOleada(int numOleada);
 	void actualizarSustoPuntos(int sustoPuntos);
 

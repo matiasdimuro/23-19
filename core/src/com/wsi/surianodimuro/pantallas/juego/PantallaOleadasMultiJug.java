@@ -87,9 +87,9 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 			}
 			
 			if (!InfoRed.companieroConectado) {
-				System.out.println("-> Companiero Desconectado!!!!");
 				Globales.juego.setScreen(new PantallaJugadorDesconectado());
 			}
+			
 			Globales.soundtrack.play();
 		}
 
@@ -120,6 +120,14 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 
 				Utiles.batch.end();
 				mostrarIndicadores();
+				
+				if (!oleadaInfo.dificultadAumentada) {
+					aumentarDificultad();
+				}
+
+				if (!oleadaInfo.mejoraEfectuada) {
+					chequearAumentoEstadisticas();
+				}
 
 				if (datosPartida.suspendida) {
 					Utiles.batch.begin();
@@ -277,6 +285,10 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 			nuevoInfectado = Ninios.retornarNinio(numInfectado);
 		}
 
+		if (oleadaInfo.aumentarVelocidadInfectados) {
+			aumentarVelocidadInfectado(nuevoInfectado);
+		}
+		
 		nuevoInfectado.setPosicion(x, y);
 		infectados.add(nuevoInfectado);
 	}
@@ -335,19 +347,24 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 	}
 
 	
-
+	
+	
 	@Override
-	public void actualizarDisparo() {
-		for (int i = 0; i < jugadorUno.getArmamento().length; i++) {
-			jugadorUno.getArmamento()[i].aumentarVelocidadDisparo();
-		}
-		for (int i = 0; i < jugadorDos.getArmamento().length; i++) {
-			jugadorDos.getArmamento()[i].aumentarVelocidadDisparo();
-		}
+	public void aumentarVida() {
+		jugadorUno.sumarVida();
+		jugadorDos.sumarVida();
+		hud.getIndicadorVidasJugUno().actualizar();
+		hud.getIndicadorVidasJugDos().actualizar();
 	}
 
 	@Override
-	public void actualizarAlcance() {
+	public void aumentarRapidez() {
+		jugadorUno.incrementarVelocidad();
+		jugadorDos.incrementarVelocidad();
+	}
+
+	@Override
+	public void aumentarAlcance() {
 		for (int i = 0; i < jugadorUno.getArmamento().length; i++) {
 			jugadorUno.getArmamento()[i].aumentarAlcance();
 		}
@@ -357,15 +374,13 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 	}
 
 	@Override
-	public void actualizarRapidez() {
-		jugadorUno.incrementarVelocidad();
-		jugadorDos.incrementarVelocidad();
-	}
-
-	@Override
-	public void aumentarVidaAgente() {
-		jugadorUno.sumarVida();
-		jugadorDos.sumarVida();
+	public void aumentarVelDisparo() {
+		for (int i = 0; i < jugadorUno.getArmamento().length; i++) {
+			jugadorUno.getArmamento()[i].aumentarVelocidadDisparo();
+		}
+		for (int i = 0; i < jugadorDos.getArmamento().length; i++) {
+			jugadorDos.getArmamento()[i].aumentarVelocidadDisparo();
+		}
 	}
 
 	@Override
@@ -424,17 +439,8 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 	}
 
 	@Override
-	public void aumentarVelocidadSpawnRed() {
-		aumentarVelocidadSpawn();
-	}
-
-	@Override
-	public void aumentarDuracionOleadaRed() {
-		aumentarDuracionOleada();
-	}
-
-	@Override
 	public void actualizarSustoPuntos(int sustoPuntos) {
+		datosPartida.puntajeTotal += sustoPuntos;
 		Globales.jugadores.get(0).sustoPuntos = sustoPuntos;
 		Globales.jugadores.get(1).sustoPuntos = sustoPuntos;
 		hud.getIndicadorGrito().actualizarDatos();
