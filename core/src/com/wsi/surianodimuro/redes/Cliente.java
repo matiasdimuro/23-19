@@ -65,7 +65,7 @@ public class Cliente extends Thread implements Disposable {
 	}
 
 	public void conectarseAlServidor() {
-//		System.out.println("-> Probando conexion al servidor ...");
+		System.out.println("-> Probando conexion al servidor ...");
 		enviarMensaje(MensajesCliente.SOLICITAR_CONEXION.getMensaje());
 	}
 
@@ -119,7 +119,7 @@ public class Cliente extends Thread implements Disposable {
 
 		else if (mensajeParametrizado[0].equals(MensajesServidor.SOLICITUD_ACEPTADA.getMensaje())) {
 			
-//			System.out.println("-> El cliente se ha conectado al servidor.");
+			System.out.println("-> El cliente se ha conectado al servidor.");
 			conectadoAlServidor = true;
 			
 			Servidor.iniciar();
@@ -302,6 +302,11 @@ public class Cliente extends Thread implements Disposable {
 			else if (mensajeParametrizado[0].equals(MensajesServidor.ACTUALIZAR_INDICADOR_GRITO.getMensaje())) {
 				final int sustoPuntos = Integer.valueOf(mensajeParametrizado[1]);
 				Globales.redListener.actualizarSustoPuntos(sustoPuntos);
+			}
+			
+			else if (mensajeParametrizado[0].equals(MensajesServidor.ACTUALIZAR_PUNTOS_TOTALES.getMensaje())) {
+				final int puntos = Integer.valueOf(mensajeParametrizado[1]);
+				Globales.redListener.actualizarPuntosTotales(puntos);
 			}
 
 			else if (mensajeParametrizado[0].equals(MensajesServidor.ACTUALIZAR_INDICADOR_OLEADA.getMensaje())) {

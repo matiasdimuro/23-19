@@ -34,5 +34,5 @@ public interface RedListener {
 	
 	void actualizarNumOleada(int numOleada);
 	void actualizarSustoPuntos(int sustoPuntos);
-
+	void actualizarPuntosTotales(int puntos);
 }

@@ -411,7 +411,7 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 		sonidos.sonarDanioAgente();
 	}
 	
-	
+
 	
 	@Override
 	public void actualizarEscape(String mensaje) {
@@ -441,9 +441,13 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 
 	@Override
 	public void actualizarSustoPuntos(int sustoPuntos) {
-		datosPartida.puntajeTotal += sustoPuntos;
 		jugadorUno.sustoPuntos = sustoPuntos;
 		jugadorDos.sustoPuntos = sustoPuntos;
 		hud.getIndicadorGrito().actualizarDatos();
+	}
+	
+	@Override
+	public void actualizarPuntosTotales(int puntos) {
+		datosPartida.puntajeTotal = puntos;
 	}
 }
