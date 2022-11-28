@@ -19,23 +19,13 @@ public enum MensajesServidor {
 	PARAR_FUEGO_AGENTE("Parar fuego agente"),
 	RESETEAR_ESTADOS_AGENTE("Resetear estados agente"),
 	
-	SPAWNEAR_INFECTADO("Spawnear infectado"),
-	MOVER_INFECTADO_IZQUIERDA("Mover infectado izquierda"),
-	MOVER_INFECTADO_DERECHA("Mover infectado derecha"),
-	RESTAR_VIDA_INFECTADO("Restar vida infectado"),
-	ELIMINAR_INFECTADO("Eliminar infectado"),
 	
-	ACTUALIZAR_POS_PROYECTIL("Actualizar posicion proyectil"),
-	ELIMINAR_PROYECTIL("Eliminar proyectil"),
-
-	REPRODUCIR_PROYECTIL_IMPACTADO("Reproducir proyectil impactado"),
 	
 	ESCAPE_MONSTRUO("Escape monstruo"),
 	ESCAPE_NINIOS("Escape ninio"),
-
+	
 	INFECCION_AGENTE("Infeccion agente"),
 	/**/
-	
 	AUMENTAR_VELOCIDAD_SPAWN("Aumentar velocidad spawn"),
 	AUMENTAR_DURACION_OLEADA("Aumentar duracion oleada"),
 	
@@ -45,11 +35,20 @@ public enum MensajesServidor {
 	AUMENTAR_RAPIDEZ("Aumentar rapidez"),
 	
 	ACTUALIZAR_INDICADOR_GRITO("Actualizar indicador grito"),
-	
-	/**/
-	ACTUALIZAR_CAJA_MENSAJES("Actualizar caja mensajes"),
 	ACTUALIZAR_INDICADOR_OLEADA("Actualizar indicador oleada"),
-
+	ACTUALIZAR_CAJA_MENSAJES("Actualizar caja mensajes"),
+	
+	SPAWNEAR_INFECTADO("Spawnear infectado"),
+	MOVER_INFECTADO_IZQUIERDA("Mover infectado izquierda"),
+	MOVER_INFECTADO_DERECHA("Mover infectado derecha"),
+	RESTAR_VIDA_INFECTADO("Restar vida infectado"),
+	ELIMINAR_INFECTADO("Eliminar infectado"),
+	
+	ACTUALIZAR_POS_PROYECTIL("Actualizar posicion proyectil"),
+	ELIMINAR_PROYECTIL("Eliminar proyectil"),
+	
+	REPRODUCIR_PROYECTIL_IMPACTADO("Reproducir proyectil impactado"),
+	
 	TERMINAR_JUEGO("Terminar juego"),
 	EMPEZAR_JUEGO("Empezar juego");
 	

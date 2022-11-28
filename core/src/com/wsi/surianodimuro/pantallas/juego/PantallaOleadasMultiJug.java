@@ -78,6 +78,13 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 			else if (Globales.sonidos.musicaEntreRondaSonando) {
 				Globales.sonidos.terminarMusicaEntreRonda();
 			}
+			else if (Globales.sonidos.musicaFinalSonando) {
+				Globales.sonidos.pausarMusicaFinal();
+			}
+			
+			if (Globales.sonidos.alarmaSonando) {
+				Globales.sonidos.pausarMusicaAlarma();
+			}
 			
 			if (!InfoRed.companieroConectado) {
 				System.out.println("-> Companiero Desconectado!!!!");
@@ -197,7 +204,10 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 
 		Globales.jugadores.get(numAgente).controlador.arriba = true;
 		Globales.jugadores.get(numAgente).usarAscensor(nuevaPosX, nuevaPosY);
-		sonidos.sonarAscensor();
+		
+		if (numAgente ==  Globales.cliente.numCliente - 1) {
+			sonidos.sonarAscensor();			
+		}
 	}
 
 	@Override
@@ -205,12 +215,14 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 
 		Globales.jugadores.get(numAgente).controlador.abajo = true;
 		Globales.jugadores.get(numAgente).usarAscensor(nuevaPosX, nuevaPosY);
-		 sonidos.sonarAscensor();
+		
+		if (numAgente ==  Globales.cliente.numCliente - 1) {
+			sonidos.sonarAscensor();			
+		}
 	}
 
 	@Override
 	public void cambiarArmaAgente(int numAgente, int numArmaNueva) {
-
 		Globales.jugadores.get(numAgente).armaEnUso = numArmaNueva;
 	}
 
@@ -221,9 +233,7 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 		Globales.jugadores.get(numAgente).dispararProyectil();
 		Globales.jugadores.get(numAgente).controlador.puedeDisparar = false;
 		
-//		if (numAgente == Globales.cliente.numCliente - 1) {
-			Gdx.audio.newSound(Gdx.files.internal(Globales.jugadores.get(numAgente).getArmamento()[Globales.jugadores.get(numAgente).armaEnUso].getTipoProyectil().getRutaSonidoDisparo())).play();
-//		}
+		Gdx.audio.newSound(Gdx.files.internal(Globales.jugadores.get(numAgente).getArmamento()[Globales.jugadores.get(numAgente).armaEnUso].getTipoProyectil().getRutaSonidoDisparo())).play();
 	}
 
 	@Override
@@ -338,10 +348,12 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 
 	@Override
 	public void actualizarAlcance() {
-		jugadorUno.getArmamento()[0].aumentarAlcance();
-		jugadorUno.getArmamento()[1].aumentarAlcance();
-		jugadorDos.getArmamento()[0].aumentarAlcance();
-		jugadorDos.getArmamento()[1].aumentarAlcance();
+		for (int i = 0; i < jugadorUno.getArmamento().length; i++) {
+			jugadorUno.getArmamento()[i].aumentarAlcance();
+		}
+		for (int i = 0; i < jugadorDos.getArmamento().length; i++) {
+			jugadorDos.getArmamento()[i].aumentarAlcance();
+		}
 	}
 
 	@Override
@@ -358,10 +370,6 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 
 	@Override
 	public void procesarInfeccionAgente(int numAgente) {
-		// TODO
-//		System.out.println("-> Agente " + numAgente + " infectado.");
-//		System.out.println("-> Agente Uno: " + jugadorUno.vida);
-//		System.out.println("-> Agente Dos: " + jugadorDos.vida);
 		
 		Globales.jugadores.get(numAgente).restarVida();
 		Globales.jugadores.get(numAgente).controlador.puedeInfectarse = false;
@@ -384,7 +392,7 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 			}
 		}
 		
-		Gdx.audio.newSound(Gdx.files.internal("sonidos/oof.mp3")).play();
+		sonidos.sonarDanioAgente();
 	}
 	
 	
@@ -395,10 +403,12 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 			datosPartida.escapesRestantesMonstruos -= 1;
 			hud.getIndicadorEscMonstruos().actualizar(); 
 			actualizarCajaMensaje(Mensajes.ESCAPE_MONSTRUO.getMensaje());
+			sonidos.sonarEscapeMonstruo();
 		} else {
 			datosPartida.escapesRestantesNinios -= 1;
 			hud.getIndicadorEscNinios().actualizar();
 			actualizarCajaMensaje(Mensajes.ESCAPE_NINIO.getMensaje());
+			sonidos.sonarEscapeNinio();
 		}
 	}
 	
@@ -423,11 +433,10 @@ public final class PantallaOleadasMultiJug extends PantallaOleadas implements Re
 		aumentarDuracionOleada();
 	}
 
-	// TODO: Implementar desde server
 	@Override
-	public void actualizarSustoPuntos(/*String*/int sustoPuntos) {
-//		hud.getIndicadorGrito().newActualizarDatos(sustoPuntos);	
+	public void actualizarSustoPuntos(int sustoPuntos) {
 		Globales.jugadores.get(0).sustoPuntos = sustoPuntos;
+		Globales.jugadores.get(1).sustoPuntos = sustoPuntos;
 		hud.getIndicadorGrito().actualizarDatos();
 	}
 }

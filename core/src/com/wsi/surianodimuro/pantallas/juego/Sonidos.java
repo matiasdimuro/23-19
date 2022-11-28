@@ -107,6 +107,8 @@ public class Sonidos implements Disposable {
 		musicaFinal.dispose();
 		musicaFinal = null;
 	}
+	
+	
 
 	private Sound boo2000;
 
@@ -114,8 +116,6 @@ public class Sonidos implements Disposable {
 		boo2000 = Gdx.audio.newSound(Gdx.files.internal("sonidos/boo2000.mp3"));
 		boo2000.play(0.25f);
 	}
-
-	
 	
 	private Sound desintox;
 
@@ -142,14 +142,23 @@ public class Sonidos implements Disposable {
 		escapeMonstruo.play();
 	}
 
-	
-	
 	private Sound escapeNinio;
 
 	public void sonarEscapeNinio() {
 		escapeNinio = Gdx.audio.newSound(Gdx.files.internal("sonidos/escapeNinios.mp3"));
 		escapeNinio.play();
 	}
+	
+	
+	
+	
+	private Sound danioAgente;
+	
+	public void sonarDanioAgente() {
+		danioAgente = Gdx.audio.newSound(Gdx.files.internal("sonidos/oof.mp3"));
+		danioAgente.play();
+	}
+
 
 	
 	
@@ -164,5 +173,6 @@ public class Sonidos implements Disposable {
 		ascensor.dispose();
 		escapeNinio.dispose();
 		escapeMonstruo.dispose();
+		danioAgente.dispose();
 	}
 }

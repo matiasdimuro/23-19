@@ -40,6 +40,6 @@ public interface RedListener {
 	void aumentarVelocidadSpawnRed();
 	void aumentarDuracionOleadaRed();
 	void actualizarNumOleada(int numOleada);
-	void actualizarSustoPuntos(/*String*/int sustoPuntos);
+	void actualizarSustoPuntos(int sustoPuntos);
 
 }
