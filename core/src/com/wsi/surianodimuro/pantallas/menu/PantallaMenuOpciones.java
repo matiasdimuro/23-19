@@ -35,7 +35,7 @@ public class PantallaMenuOpciones extends Pantalla {
 		fondo = new Imagen(rutasWallapers[Utiles.rand.nextInt(rutasWallapers.length)], 0, 0,
 				ConfigGraficos.ANCHO_PANTALLA, ConfigGraficos.ALTO_PANTALLA);
 
-		btnRecord = new Boton("botones/btnRecord.png", "botones/btnRecordHover.png", 1820,
+		btnRecord = new Boton("botones/btnRecord.png", "botones/btnRecordHover.png", ConfigGraficos.ANCHO_PANTALLA - 100,
 				ConfigGraficos.ALTO_PANTALLA - 75 - 20, 75, 75);
 
 		final float ANCHO_BOTON = 300;

@@ -54,7 +54,7 @@ public class PantallaRecord extends Pantalla {
 		
 		/*cargo los records a un label y cargo ese label a mi tabla, haciendo una linea por cada label que cargo*/
 		for (int i = 0; i < records.length; i++) {
-			System.out.println(records[i]);
+//			System.out.println(records[i]);
 			rcrd = String.format("%s) %s ptos.", i+1, records[i]);
 			rLabel = new Label(rcrd, skin);
 			recordsTable.add(rLabel);
