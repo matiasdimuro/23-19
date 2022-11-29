@@ -10,10 +10,8 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 
 		config.useVsync(true);
-//		config.setResizable(true);
 		config.setForegroundFPS(60);
-		config.setWindowedMode(720, 540);
-//		config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
+		config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
 		config.setTitle("23-19: The White Sock Incident");
 		config.setWindowIcon("logo.png");
 		
