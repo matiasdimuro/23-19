@@ -6,16 +6,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.wsi.surianodimuro.interfaces.InventarioListable;
 import com.wsi.surianodimuro.interfaces.Renderizable;
-import com.wsi.surianodimuro.utilidades.Globales;
 import com.wsi.surianodimuro.utilidades.Imagen;
-import com.wsi.surianodimuro.utilidades.Utiles;
 
 public abstract class Inventario implements Renderizable {
 
 	private Imagen contenedor;
 	protected InventarioListable[] elementos;
 	
-	private Sprite seleccion;
+	protected Sprite seleccion;
 
 	/**
 	 * Contenedor con items dentro de el.
@@ -68,11 +66,6 @@ public abstract class Inventario implements Renderizable {
 			
 			seleccion.setSize(ANCHO_ITEM, 2);
 		}
-		
-		int numAgente = Globales.cliente.numCliente - 1;
-		
-		seleccion.setPosition(elementos[Globales.jugadores.get(numAgente).armaEnUso].getPosicion().x, elementos[Globales.jugadores.get(numAgente).armaEnUso].getPosicion().y - 7);
-		seleccion.draw(Utiles.batch);
 	}
 
 	@Override

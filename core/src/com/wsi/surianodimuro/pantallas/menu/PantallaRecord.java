@@ -105,7 +105,6 @@ public class PantallaRecord extends Pantalla {
 		if ((volver) && ((Gdx.input.isTouched())) || (Gdx.input.isKeyPressed(Keys.ESCAPE))) {
 			Globales.juego.setScreen(new PantallaMenuOpciones());
 		}
-
 	}
 
 	public void dispose() {

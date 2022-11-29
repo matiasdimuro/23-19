@@ -126,10 +126,8 @@ public class PantallaMenuJugar extends Pantalla {
 				}
 				if (!Globales.cliente.iniciado) {
 					Globales.cliente.start();
-//					System.out.println("-> Se ha iniciado el hilo del cliente!");
 				}
 				if (!Servidor.iniciado) {
-//					System.out.println("-> Se ha cargado el servidor!");
 					Servidor.cargarServidor();
 				}
 				if ((Globales.cliente.iniciado) && (Servidor.iniciado)) {

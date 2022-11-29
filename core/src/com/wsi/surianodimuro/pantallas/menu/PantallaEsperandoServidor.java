@@ -38,14 +38,7 @@ public class PantallaEsperandoServidor extends Pantalla {
 		if (!Servidor.online) {
 			Globales.juego.setScreen(new PantallaServidorDesconectado());
 		}
-		
-//		Globales.cliente.conectarseAlServidor();
-//		if (Globales.cliente.conectadoAlServidor) {
-//			Globales.juego.setScreen(new PantallaEsperandoJugador());			
-//		} else {
-//			System.out.println("Servidor no encontrado... Buscando...");
-//		}
-		
+
 		if (InfoRed.conexionGlobalEstablecida) {
 			Globales.juego.setScreen(new PantallaOleadasMultiJug());
 			Globales.soundtrack.pause();
@@ -79,7 +72,6 @@ public class PantallaEsperandoServidor extends Pantalla {
 		}
 		if ((volver) && ((Gdx.input.isButtonJustPressed(Buttons.LEFT))) || (Gdx.input.isKeyPressed(Keys.ESCAPE))) {
 			Globales.juego.setScreen(new PantallaMenuJugar());
-//			Globales.cliente.desconectarseDelServidor(); 
 		}
 	}
 

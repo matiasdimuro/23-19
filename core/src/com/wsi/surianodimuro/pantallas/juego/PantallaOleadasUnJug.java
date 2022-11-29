@@ -15,6 +15,7 @@ import com.wsi.surianodimuro.enumeradores.Monstruos;
 import com.wsi.surianodimuro.enumeradores.Ninios;
 import com.wsi.surianodimuro.enumeradores.Proyectiles;
 import com.wsi.surianodimuro.interfaces.InfectadosListables;
+import com.wsi.surianodimuro.interfaces.MovimientoAgenteListener;
 import com.wsi.surianodimuro.interfaces.ProcesosJugabilidad;
 import com.wsi.surianodimuro.objetos.Ascensor;
 import com.wsi.surianodimuro.objetos.PuertaSpawn;
@@ -29,7 +30,7 @@ import com.wsi.surianodimuro.utilidades.Globales;
 import com.wsi.surianodimuro.utilidades.Utiles;
 import com.wsi.surianodimuro.utilidades.timers.TimerUnJug;
 
-public final class PantallaOleadasUnJug extends PantallaOleadas implements ProcesosJugabilidad {
+public final class PantallaOleadasUnJug extends PantallaOleadas implements ProcesosJugabilidad, MovimientoAgenteListener {
 
 	private Agente jugadorUno;
 	private HudUnJug hud;

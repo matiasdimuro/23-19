@@ -71,7 +71,6 @@ public class PantallaJugadorDesconectado extends Pantalla {
 			btnVolver.isHover = false;
 		}
 		if ((volver) && ((Gdx.input.isButtonJustPressed(Buttons.LEFT))) || (Gdx.input.isKeyPressed(Keys.ESCAPE))) {
-//			Globales.cliente.desconectarseDelServidor();
 			Globales.juego.setScreen(new PantallaMenuJugar());
 		}
 	}

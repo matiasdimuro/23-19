@@ -24,7 +24,7 @@ public class Cliente extends Thread implements Disposable {
 	public boolean conectadoAlServidor = false;
 
 	public Cliente() {
-//		System.out.println("Cliente creado.");
+		System.out.println("Cliente creado.");
 		try {
 			socket = new DatagramSocket();
 		} catch (SocketException e) {
@@ -65,7 +65,7 @@ public class Cliente extends Thread implements Disposable {
 	}
 
 	public void conectarseAlServidor() {
-		System.out.println("-> Probando conexion al servidor ...");
+//		System.out.println("-> Probando conexion al servidor ...");
 		enviarMensaje(MensajesCliente.SOLICITAR_CONEXION.getMensaje());
 	}
 
@@ -79,7 +79,6 @@ public class Cliente extends Thread implements Disposable {
 
 		String mensaje = new String(datagrama.getData()).trim();
 //		System.out.println("- Mensaje: " + mensaje);
-
 		String[] mensajeParametrizado = mensaje.split("#");
 
 		if (mensajeParametrizado[0].equals(MensajesServidor.EMPEZAR_JUEGO.getMensaje())) {
@@ -119,7 +118,7 @@ public class Cliente extends Thread implements Disposable {
 
 		else if (mensajeParametrizado[0].equals(MensajesServidor.SOLICITUD_ACEPTADA.getMensaje())) {
 			
-			System.out.println("-> El cliente se ha conectado al servidor.");
+//			System.out.println("-> El cliente se ha conectado al servidor.");
 			conectadoAlServidor = true;
 			
 			Servidor.iniciar();
